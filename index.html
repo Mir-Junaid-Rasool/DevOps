@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1: DevOps Fundamentals | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .example-box {
+            background: #e8f4f8;
+            border-left: 4px solid #27ae60;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .example-box h4 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-item h4 {
+            color: #3498db;
+            margin-top: 0;
+        }
+
+        .case-study {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .case-study h4 {
+            color: #e74c3c;
+            margin-top: 0;
+        }
+
+        .key-points {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .homework h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .quiz {
+            background: #cce5ff;
+            border-left: 4px solid #004085;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .quiz h3 {
+            color: #004085;
+            margin-top: 0;
+        }
+
+        .resources {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .resources a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resources a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .next-session {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .next-session a {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .next-session a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffd700 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 90%;
+            padding: 0.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 DevOps Fundamentals</h1>
+            <p>Session 1 | Course Code: 22CSEDE16 | B.Tech CSE 2022</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Session 1: DevOps Fundamentals</a></li>
+                <li><a href="session2.html">Session 2: SDLC & DevOps</a></li>
+                <li><a href="session3.html">Session 3: DevOps Tools</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives">
+                <h2>📚 Learning Objectives</h2>
+                <p>By the end of this session, students will be able to:</p>
+                <ul>
+                    <li>Define DevOps and explain its core principles</li>
+                    <li>Understand the main objectives of DevOps</li>
+                    <li>Recognize the benefits and business value of DevOps</li>
+                    <li>Trace the evolution and history of DevOps</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Part 1: What Is DevOps? (60 minutes)</h2>
+                
+                <div class="definition-box">
+                    <h3>Definition of DevOps</h3>
+                    <p><strong>DevOps</strong> is a set of practices, tools, and cultural philosophies that combines software development (Dev) and IT operations (Ops) to shorten the systems development life cycle and provide continuous delivery with high software quality.</p>
+                    <p style="margin-top: 1rem; font-size: 1.2rem;"><strong>Simple Definition:</strong> DevOps = Development + Operations working together</p>
+                </div>
+
+                <h3>Key Characteristics</h3>
+                <ul style="margin-left: 2rem; line-height: 2;">
+                    <li><strong>Collaboration:</strong> Breaking down silos between teams</li>
+                    <li><strong>Automation:</strong> Reducing manual, repetitive tasks</li>
+                    <li><strong>Continuous Improvement:</strong> Iterative process of enhancement</li>
+                    <li><strong>Customer-Centric:</strong> Focus on delivering value quickly</li>
+                </ul>
+
+                <h3>Core Principles of DevOps</h3>
+
+                <h4>1. Collaboration and Communication</h4>
+                <div class="example-box">
+                    <h4>Real-World Example</h4>
+                    <p><strong>Before DevOps:</strong> Developer throws code "over the wall" to operations. If deployment fails, Operations blames Dev for bad code. Dev blames Ops for poor infrastructure.</p>
+                    <p><strong>With DevOps:</strong> Dev and Ops work together from planning to deployment. They jointly troubleshoot issues.</p>
+                </div>
+
+                <h4>2. Automation</h4>
+                <p>Automate repetitive tasks, reduce human error, and speed up processes.</p>
+                <div class="example-box">
+                    <h4>Automation in Action</h4>
+                    <p><strong>Manual Process:</strong> Developer commits code → Email to tester → Manual testing → Email to Ops → Manual deployment <span class="highlight">(Takes days)</span></p>
+                    <p><strong>Automated Process:</strong> Code commit → Automatic testing → Automatic deployment to staging → One-click production deployment <span class="highlight">(Takes minutes)</span></p>
+                </div>
+
+                <h4>3. Continuous Integration & Continuous Delivery (CI/CD)</h4>
+                <div class="example-box">
+                    <h4>Real-World Example - Netflix</h4>
+                    <p>Netflix deploys code <strong>thousands of times per day</strong>. If they find a bug at 2 PM, they can fix it and deploy the update within hours, not weeks.</p>
+                </div>
+
+                <h4>4. Monitoring and Feedback</h4>
+                <div class="example-box">
+                    <h4>Real-World Example - Amazon</h4>
+                    <p>Amazon monitors their systems 24/7. If a server starts slowing down, automated alerts trigger, and systems can auto-scale or restart services before customers notice any issues.</p>
+                </div>
+
+                <h4>5. Infrastructure as Code (IaC)</h4>
+                <div class="example-box">
+                    <h4>Practical Example</h4>
+                    <p>Instead of manually clicking through AWS console to create 10 servers, write a script that creates all 10 servers identically in minutes.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: DevOps Main Objectives (45 minutes)</h2>
+
+                <h3>1. Faster Time to Market</h3>
+                <p><strong>Objective:</strong> Reduce the time from idea to production</p>
+                
+                <table class="comparison-table">
+                    <tr>
+                        <th>Approach</th>
+                        <th>Timeline</th>
+                        <th>Result</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Traditional</strong></td>
+                        <td>Development: 3 months<br>Testing: 1 month<br>Deployment: 2 weeks</td>
+                        <td><strong>Total: ~4.5 months</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DevOps</strong></td>
+                        <td>Development + Continuous Testing: 6 weeks<br>Automated Deployment: 1 day</td>
+                        <td><strong>Total: ~6 weeks</strong></td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h4>Real Example - Etsy</h4>
+                    <p><strong>Before DevOps:</strong> 2 deployments per week</p>
+                    <p><strong>After DevOps:</strong> 50+ deployments per day</p>
+                    <p><strong>Result:</strong> Faster feature delivery, happier customers</p>
+                </div>
+
+                <h3>2. Improved Collaboration</h3>
+                <div class="example-box">
+                    <h4>Scenario - E-commerce Website</h4>
+                    <p><strong>Problem (Without DevOps):</strong></p>
+                    <ul>
+                        <li>Black Friday sale approaching</li>
+                        <li>Dev team: "We added shopping cart feature, it works on our machines"</li>
+                        <li>Ops team: "We need 2 weeks to set up new servers and configure"</li>
+                        <li><strong>Result:</strong> Feature delayed, sales opportunity lost</li>
+                    </ul>
+                    <p><strong>Solution (With DevOps):</strong></p>
+                    <ul>
+                        <li>Dev and Ops plan together from day 1</li>
+                        <li>Infrastructure prepared alongside code</li>
+                        <li>Automated deployment ready</li>
+                        <li><strong>Result:</strong> Feature deployed on time, successful sale</li>
+                    </ul>
+                </div>
+
+                <h3>3. Higher Quality and Reliability</h3>
+                <div class="example-box">
+                    <h4>Example - Facebook</h4>
+                    <ul>
+                        <li>Uses automated testing for every code change</li>
+                        <li>Monitors performance in real-time</li>
+                        <li>Can rollback problematic updates in seconds</li>
+                        <li><strong>Result:</strong> 99.9%+ uptime despite constant updates</li>
+                    </ul>
+                </div>
+
+                <h3>4. Reduced Costs</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Area</th>
+                        <th>Traditional</th>
+                        <th>DevOps</th>
+                        <th>Savings</th>
+                    </tr>
+                    <tr>
+                        <td>Manual Testing</td>
+                        <td>40 hours/week</td>
+                        <td>5 hours/week</td>
+                        <td>87% time saved</td>
+                    </tr>
+                    <tr>
+                        <td>Server Management</td>
+                        <td>5 people full-time</td>
+                        <td>1 person + automation</td>
+                        <td>80% cost reduction</td>
+                    </tr>
+                    <tr>
+                        <td>Bug Fixes</td>
+                        <td>Found in production (expensive)</td>
+                        <td>Found in testing (cheap)</td>
+                        <td>10x cost reduction</td>
+                    </tr>
+                    <tr>
+                        <td>Downtime</td>
+                        <td>4 hours/month</td>
+                        <td>30 min/month</td>
+                        <td>Revenue protection</td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h4>Real Example - Nordstrom</h4>
+                    <ul>
+                        <li>Reduced deployment time from weeks to hours</li>
+                        <li>Decreased infrastructure costs by 40%</li>
+                        <li>Increased deployment frequency by 1000%</li>
+                    </ul>
+                </div>
+
+                <h3>5. Continuous Feedback and Improvement</h3>
+                <div class="example-box">
+                    <h4>Example - Spotify</h4>
+                    <ul>
+                        <li>Releases new features to small user groups first</li>
+                        <li>Monitors usage and feedback</li>
+                        <li>Iterates based on real data</li>
+                        <li>Rolls out successful features to everyone</li>
+                        <li><strong>Result:</strong> Features users actually want</li>
+                    </ul>
+                </div>
+
+                <h3>6. Enhanced Security (DevSecOps)</h3>
+                <div class="key-points">
+                    <p><strong>Traditional Approach:</strong> Security check at the end → Problems found too late → Expensive to fix</p>
+                    <p><strong>DevOps Approach:</strong> Security automated in CI/CD pipeline → Every code commit scanned → Vulnerabilities caught immediately → More secure applications</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 3: History of DevOps (30 minutes)</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>2007-2008: The Seeds</h4>
+                        <p><strong>Problem:</strong> Large gap between development and operations</p>
+                        <ul>
+                            <li>Agile Development was popular but deployment was still slow</li>
+                            <li>Patrick Debois frustrated with Dev-Ops conflicts in Belgium</li>
+                        </ul>
+                        <p><strong>Key Pain Points:</strong></p>
+                        <ul>
+                            <li>Developers wanted rapid changes</li>
+                            <li>Operations wanted stability</li>
+                            <li>Conflict led to delays and finger-pointing</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4>2009: Birth of DevOps</h4>
+                        <ul>
+                            <li><strong>Velocity Conference:</strong> John Allspaw and Paul Hammond presentation: "10+ Deploys Per Day: Dev and Ops Cooperation at Flickr"</li>
+                            <li>Patrick Debois organized first "DevOpsDays" conference in Ghent, Belgium</li>
+                            <li>#DevOps hashtag trending on Twitter</li>
+                            <li><strong>Official Birth of DevOps Movement</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4>2010-2013: Growing Adoption</h4>
+                        <ul>
+                            <li>Large companies start experimenting</li>
+                            <li>Books and blogs emerge</li>
+                            <li>Tools develop: Jenkins, Chef, Puppet</li>
+                            <li>DevOps becomes a recognized practice</li>
+                        </ul>
+                        <p><strong>Early Adopters:</strong> Amazon, Netflix, Etsy, Facebook, Google</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4>2014-2016: Mainstream Acceptance</h4>
+                        <ul>
+                            <li>"The Phoenix Project" book published (2013) - made DevOps accessible</li>
+                            <li>Docker released (2013) - revolutionized containerization</li>
+                            <li>Kubernetes released (2014) - container orchestration</li>
+                            <li>DevOps becomes industry standard</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4>2017-Present: DevOps Everywhere</h4>
+                        <ul>
+                            <li>DevSecOps (Security integrated)</li>
+                            <li>AIOps (AI/ML in operations)</li>
+                            <li>GitOps (Git-based deployments)</li>
+                            <li>99% of Fortune 500 companies use DevOps practices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 4: Cultural Shift (25 minutes)</h2>
+
+                <h3>Traditional IT Culture vs DevOps Culture</h3>
+
+                <div class="example-box">
+                    <h4>Traditional IT (Siloed Approach)</h4>
+                    <p><strong>Structure:</strong> [Business] → [Developers] → [QA] → [Operations] → [Production]</p>
+                    <p><strong>Problems:</strong></p>
+                    <ul>
+                        <li>Each team has different goals</li>
+                        <li>Blame culture ("Not my problem")</li>
+                        <li>Long wait times between stages</li>
+                        <li>Limited communication</li>
+                    </ul>
+                    <p><strong>Example Timeline:</strong></p>
+                    <ol>
+                    <li>What specific DevOps practices could help?</li>
+                    <li>What would be the biggest challenge in implementing DevOps?</li>
+                    <li>How would you measure success?</li>
+                    <li>What tools might you need?</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                
+                <div class="key-points">
+                    <h3>DevOps IS:</h3>
+                    <ul>
+                        <li>✅ A culture of collaboration</li>
+                        <li>✅ Automation of repetitive tasks</li>
+                        <li>✅ Continuous improvement mindset</li>
+                        <li>✅ Faster delivery of quality software</li>
+                        <li>✅ Shared responsibility</li>
+                    </ul>
+                </div>
+
+                <div class="key-points">
+                    <h3>DevOps is NOT:</h3>
+                    <ul>
+                        <li>❌ Just a set of tools</li>
+                        <li>❌ Only for big companies</li>
+                        <li>❌ A job title or separate team</li>
+                        <li>❌ A replacement for good practices</li>
+                        <li>❌ A one-time implementation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Research Assignment:</h4>
+                <ul>
+                    <li>Find one company (not mentioned in class) that successfully implemented DevOps</li>
+                    <li>Write a 1-page summary including:
+                        <ul>
+                            <li>What problems they faced</li>
+                            <li>What DevOps practices they adopted</li>
+                            <li>What results they achieved</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2. Reflection Questions:</h4>
+                <ul>
+                    <li>Why do you think the traditional siloed approach doesn't work well in modern software development?</li>
+                    <li>If you were managing a software team, what would be your first DevOps initiative?</li>
+                </ul>
+
+                <h4>3. Prepare for Next Session:</h4>
+                <ul>
+                    <li>Read about Waterfall vs Agile methodologies</li>
+                    <li>Think about how DevOps relates to Agile</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz (Knowledge Check)</h3>
+                <ol>
+                    <li>What does DevOps stand for?</li>
+                    <li>Name three main objectives of DevOps.</li>
+                    <li>In which year was the term "DevOps" coined?</li>
+                    <li>What is the main cultural shift DevOps promotes?</li>
+                    <li>Give one example of how automation helps in DevOps.</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li>Development + Operations</li>
+                        <li>Faster delivery, improved collaboration, higher quality (any three from session)</li>
+                        <li>2009</li>
+                        <li>Breaking down silos, shared responsibility, collaboration</li>
+                        <li>Automated testing, automated deployment, automated monitoring (any one)</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="resources">
+                <h3>📚 Additional Resources</h3>
+                
+                <h4>Videos to Watch:</h4>
+                <ul>
+                    <li><a href="https://www.youtube.com/results?search_query=what+is+devops+aws" target="_blank">What is DevOps? by AWS (10 min)</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=10+deploys+per+day+velocity" target="_blank">10+ Deploys Per Day - Velocity 2009 presentation (30 min)</a></li>
+                </ul>
+
+                <h4>Articles to Read:</h4>
+                <ul>
+                    <li>"The Phoenix Project" - Chapter 1 (Introduction to DevOps through story)</li>
+                    <li><a href="https://www.atlassian.com/devops/what-is-devops/devops-culture" target="_blank">DevOps Culture by Atlassian</a></li>
+                </ul>
+
+                <h4>Websites:</h4>
+                <ul>
+                    <li><a href="https://devops.com" target="_blank">devops.com</a></li>
+                    <li><a href="https://www.devopsinstitute.com" target="_blank">The DevOps Institute</a></li>
+                    <li><a href="https://aws.amazon.com/devops/what-is-devops/" target="_blank">AWS DevOps Resources</a></li>
+                </ul>
+            </div>
+
+            <div class="next-session">
+                <h3>🚀 Next Session Preview</h3>
+                <h2>Session 2: SDLC Models & DevOps</h2>
+                <p>We'll explore:</p>
+                <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+                    <li>Deep dive into Waterfall and Agile methodologies</li>
+                    <li>How DevOps enhances Agile</li>
+                    <li>Practical comparison with real-world examples</li>
+                </ul>
+                <a href="session2.html">Go to Session 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 DevOps Course | B.Tech CSE 2022 | Course Code: 22CSEDE16</p>
+            <p>Faculty of Engineering and Technology</p>
+        </footer>
+    </div>
+</ol>
+                        <li>Developer creates new login feature (3 weeks)</li>
+                        <li>Throws code to QA (1 week wait)</li>
+                        <li>QA finds bugs, sends back to Dev (2 weeks fixing)</li>
+                        <li>Approved code sent to Ops (2 weeks wait)</li>
+                        <li>Ops struggles to deploy (1 week debugging)</li>
+                        <li><strong>Total: 9+ weeks for one feature</strong></li>
+                    </ol>
+                </div>
+
+                <div class="example-box">
+                    <h4>DevOps Culture (Collaborative Approach)</h4>
+                    <p><strong>Structure:</strong> [Cross-functional DevOps Team] → Developers + Operations + QA + Security → Shared Goals, Shared Responsibility → Continuous Delivery to Production</p>
+                    <p><strong>Same Scenario with DevOps:</strong></p>
+                    <ol>
+                        <li>Team plans feature together (1 day)</li>
+                        <li>Developer codes with automated testing (1 week)</li>
+                        <li>Automatic deployment to staging (minutes)</li>
+                        <li>Team reviews together (1 day)</li>
+                        <li>One-click deployment to production (minutes)</li>
+                        <li><strong>Total: ~1.5 weeks for one feature</strong></li>
+                    </ol>
+                </div>
+
+                <h3>Key Cultural Changes</h3>
+
+                <h4>1. "You Build It, You Run It"</h4>
+                <div class="example-box">
+                    <h4>Amazon's Approach</h4>
+                    <p>Development teams are on-call for their services. If something breaks at 3 AM, the team that built it fixes it. This motivates them to build reliable systems.</p>
+                </div>
+
+                <h4>2. Fail Fast, Learn Faster</h4>
+                <div class="example-box">
+                    <h4>Netflix Chaos Engineering</h4>
+                    <p>Netflix intentionally breaks their own systems (Chaos Monkey) to find weaknesses and improve resilience.</p>
+                </div>
+
+                <h4>3. Automate Everything</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>If you do it more than twice, automate it</li>
+                    <li>Free up time for creative work</li>
+                    <li>Reduce human error</li>
+                </ul>
+
+                <h4>4. Measure Everything</h4>
+                <div class="key-points">
+                    <p><strong>Common DevOps Metrics:</strong></p>
+                    <ul>
+                        <li>Deployment Frequency</li>
+                        <li>Lead Time for Changes</li>
+                        <li>Mean Time to Recovery (MTTR)</li>
+                        <li>Change Failure Rate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Real-World Case Studies (20 minutes)</h2>
+
+                <div class="case-study">
+                    <h4>Case Study 1: Amazon</h4>
+                    <p><strong>Challenge:</strong></p>
+                    <ul>
+                        <li>Massive scale (millions of customers)</li>
+                        <li>Need for rapid innovation</li>
+                        <li>High availability requirements</li>
+                    </ul>
+                    <p><strong>DevOps Implementation:</strong></p>
+                    <ul>
+                        <li>Microservices architecture</li>
+                        <li>Automated deployment pipelines</li>
+                        <li>Continuous monitoring</li>
+                    </ul>
+                    <p><strong>Results:</strong></p>
+                    <ul>
+                        <li>Deploys code every 11.7 seconds</li>
+                        <li>99.99% uptime</li>
+                        <li>Reduced costs significantly</li>
+                        <li>Faster time to market</li>
+                    </ul>
+                </div>
+
+                <div class="case-study">
+                    <h4>Case Study 2: Target</h4>
+                    <p><strong>Challenge:</strong></p>
+                    <ul>
+                        <li>Slow deployment process (weeks)</li>
+                        <li>Competition from Amazon</li>
+                        <li>Legacy systems</li>
+                    </ul>
+                    <p><strong>DevOps Implementation:</strong></p>
+                    <ul>
+                        <li>Created DevOps Center of Excellence</li>
+                        <li>Invested in automation tools</li>
+                        <li>Cultural transformation</li>
+                    </ul>
+                    <p><strong>Results:</strong></p>
+                    <ul>
+                        <li>Deployment time: weeks → hours</li>
+                        <li>Release frequency: monthly → daily</li>
+                        <li>Improved customer satisfaction</li>
+                        <li>Better employee morale</li>
+                    </ul>
+                </div>
+
+                <div class="case-study">
+                    <h4>Case Study 3: NASA JPL (Jet Propulsion Laboratory)</h4>
+                    <p><strong>Challenge:</strong></p>
+                    <ul>
+                        <li>Mission-critical systems</li>
+                        <li>Zero tolerance for errors</li>
+                        <li>Complex deployments</li>
+                    </ul>
+                    <p><strong>DevOps Implementation:</strong></p>
+                    <ul>
+                        <li>Automated testing</li>
+                        <li>Infrastructure as Code</li>
+                        <li>Continuous integration</li>
+                    </ul>
+                    <p><strong>Results:</strong></p>
+                    <ul>
+                        <li>Faster mission deployments</li>
+                        <li>Reduced errors</li>
+                        <li>Better collaboration across teams</li>
+                        <li>Cost savings</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3>🎯 Class Activity: DevOps Benefits Analysis (10 minutes)</h3>
+                <h4>Scenario:</h4>
+                <p>Your company builds a mobile banking app with 1 million users. Currently:</p>
+                <ul>
+                    <li>New features take 3 months to deploy</li>
+                    <li>App crashes once a week</li>
+                    <li>When something breaks, Dev and Ops teams argue about whose fault it is</li>
+                    <li>Competitors are releasing features faster</li>
+                </ul>
+                </div>
+                </body>
+                </html>
