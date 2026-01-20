@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 3: DevOps Tools Ecosystem | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #3498db;
+        }
+
+        .tool-card.jenkins {
+            border-top-color: #d33833;
+        }
+
+        .tool-card.docker {
+            border-top-color: #2496ed;
+        }
+
+        .tool-card.ansible {
+            border-top-color: #ee0000;
+        }
+
+        .tool-card.puppet {
+            border-top-color: #ffae1a;
+        }
+
+        .tool-card.chef {
+            border-top-color: #f09820;
+        }
+
+        .tool-card.vagrant {
+            border-top-color: #1563ff;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .code-block .comment {
+            color: #95a5a6;
+        }
+
+        .code-block .command {
+            color: #3498db;
+        }
+
+        .installation-steps {
+            background: #e8f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .installation-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .installation-steps li {
+            margin: 0.5rem 0;
+            line-height: 1.8;
+        }
+
+        .use-case {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .use-case h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .features-list {
+            background: #d4edda;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .features-list h4 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .features-list ul {
+            margin-left: 1.5rem;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box h4 {
+            color: #dc3545;
+            margin-top: 0;
+        }
+
+        .practical-demo {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .practical-demo h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .tool-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .homework h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .quiz {
+            background: #cce5ff;
+            border-left: 4px solid #004085;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .quiz h3 {
+            color: #004085;
+            margin-top: 0;
+        }
+
+        .next-session {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .next-session a {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .next-session a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffd700 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 90%;
+            padding: 0.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+
+            .tool-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛠️ DevOps Tools Ecosystem</h1>
+            <p>Session 3 | Course Code: 22CSEDE16 | B.Tech CSE 2022</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Session 1: DevOps Fundamentals</a></li>
+                <li><a href="session2.html">Session 2: SDLC & DevOps</a></li>
+                <li><a href="session3.html">Session 3: DevOps Tools</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives">
+                <h2>📚 Learning Objectives</h2>
+                <p>By the end of this session, students will be able to:</p>
+                <ul>
+                    <li>Understand the DevOps tools landscape and categories</li>
+                    <li>Install and configure Jenkins for CI/CD</li>
+                    <li>Work with Docker containers and images</li>
+                    <li>Set up Vagrant for development environments</li>
+                    <li>Compare configuration management tools (Ansible, Puppet, Chef)</li>
+                    <li>Select appropriate tools for different DevOps scenarios</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>DevOps Tools Landscape Overview</h2>
+                
+                <p>DevOps tools are categorized based on their primary function in the software delivery pipeline:</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                        <th>Popular Tools</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Version Control</strong></td>
+                        <td>Track code changes, collaboration</td>
+                        <td>Git, GitHub, GitLab, Bitbucket</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CI/CD</strong></td>
+                        <td>Automate build, test, deploy</td>
+                        <td>Jenkins, GitLab CI, CircleCI, Travis CI</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Containerization</strong></td>
+                        <td>Package applications with dependencies</td>
+                        <td>Docker, Kubernetes, Podman</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Configuration Management</strong></td>
+                        <td>Automate infrastructure setup</td>
+                        <td>Ansible, Puppet, Chef, SaltStack</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Virtual Development</strong></td>
+                        <td>Create reproducible dev environments</td>
+                        <td>Vagrant, VirtualBox, VMware</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monitoring</strong></td>
+                        <td>Track performance and errors</td>
+                        <td>Prometheus, Grafana, Nagios</td>
+                    </tr>
+                </table>
+
+                <div class="use-case">
+                    <h4>💡 Why So Many Tools?</h4>
+                    <p>Each tool solves a specific problem in the DevOps pipeline. A typical DevOps workflow uses multiple tools together:</p>
+                    <p><strong>Example Pipeline:</strong> Developer writes code → Git (version control) → Jenkins (builds & tests) → Docker (containerizes) → Kubernetes (deploys) → Prometheus (monitors)</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 1: Jenkins - CI/CD Automation (90 minutes)</h2>
+                
+                <div class="tool-card jenkins">
+                    <div class="icon">🔧</div>
+                    <h3>What is Jenkins?</h3>
+                    <p>Jenkins is an <strong>open-source automation server</strong> that enables Continuous Integration and Continuous Delivery. It automates the building, testing, and deployment of applications.</p>
+                    
+                    <div class="features-list">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>✅ Free and open source</li>
+                            <li>✅ 1800+ plugins for integration with almost any tool</li>
+                            <li>✅ Distributed builds (master-slave architecture)</li>
+                            <li>✅ Easy installation and configuration</li>
+                            <li>✅ Supports all major version control systems</li>
+                            <li>✅ Pipeline as Code (Jenkinsfile)</li>
+                        </ul>
+                    </div>
+
+                    <h3>Jenkins Installation (Windows)</h3>
+                    <div class="installation-steps">
+                        <h4>Prerequisites:</h4>
+                        <ul>
+                            <li>Java JDK 11 or later installed</li>
+                            <li>At least 256 MB RAM (1 GB recommended)</li>
+                            <li>10 GB of disk space</li>
+                        </ul>
+
+                        <h4>Installation Steps:</h4>
+                        <ol>
+                            <li><strong>Download Jenkins:</strong>
+                                <ul>
+                                    <li>Visit <code>https://www.jenkins.io/download/</code></li>
+                                    <li>Download <code>jenkins.war</code> file or Windows installer</li>
+                                </ul>
+                            </li>
+                            <li><strong>Install Java (if not installed):</strong>
+                                <div class="code-block">
+<span class="comment"># Check Java version</span>
+java -version
+
+<span class="comment"># If not installed, download from Oracle or use OpenJDK</span>
+                                </div>
+                            </li>
+                            <li><strong>Run Jenkins WAR file:</strong>
+                                <div class="code-block">
+<span class="comment"># Navigate to download folder</span>
+cd Downloads
+
+<span class="comment"># Run Jenkins</span>
+java -jar jenkins.war
+
+<span class="comment"># Or specify port (default is 8080)</span>
+java -jar jenkins.war --httpPort=9090
+                                </div>
+                            </li>
+                            <li><strong>Access Jenkins:</strong>
+                                <ul>
+                                    <li>Open browser: <code>http://localhost:8080</code></li>
+                                    <li>You'll see "Unlock Jenkins" screen</li>
+                                </ul>
+                            </li>
+                            <li><strong>Get Initial Admin Password:</strong>
+                                <div class="code-block">
+<span class="comment"># Password location (Windows):</span>
+C:\Users\YourUsername\.jenkins\secrets\initialAdminPassword
+
+<span class="comment"># Or check console output for password</span>
+                                </div>
+                            </li>
+                            <li><strong>Install Suggested Plugins:</strong>
+                                <ul>
+                                    <li>Click "Install suggested plugins"</li>
+                                    <li>Wait for plugins to install (~5 minutes)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Create Admin User:</strong>
+                                <ul>
+                                    <li>Enter username, password, email</li>
+                                    <li>Click "Save and Continue"</li>
+                                </ul>
+                            </li>
+                            <li><strong>Jenkins is Ready!</strong>
+                                <ul>
+                                    <li>You'll see the Jenkins Dashboard</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h3>Jenkins Installation (Linux/Ubuntu)</h3>
+                    <div class="code-block">
+<span class="comment"># Update package index</span>
+sudo apt update
+
+<span class="comment"># Install Java</span>
+sudo apt install openjdk-11-jdk -y
+
+<span class="comment"># Add Jenkins repository</span>
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+<span class="comment"># Install Jenkins</span>
+sudo apt update
+sudo apt install jenkins -y
+
+<span class="comment"># Start Jenkins service</span>
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+<span class="comment"># Check status</span>
+sudo systemctl status jenkins
+
+<span class="comment"># Get initial password</span>
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+                    </div>
+
+                    <h3>Common Uses of Jenkins</h3>
+                    <div class="use-case">
+                        <h4>Use Case 1: Automated Testing</h4>
+                        <p><strong>Scenario:</strong> Every time a developer pushes code to GitHub, automatically run all tests.</p>
+                        <p><strong>Setup:</strong></p>
+                        <ol>
+                            <li>Create a new Jenkins job</li>
+                            <li>Connect to GitHub repository</li>
+                            <li>Configure webhook (GitHub notifies Jenkins on push)</li>
+                            <li>Add build step: <code>mvn test</code> (for Java) or <code>npm test</code> (for Node.js)</li>
+                            <li>If tests fail, notify team via email/Slack</li>
+                        </ol>
+                        <p><strong>Result:</strong> No broken code reaches production!</p>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Use Case 2: Continuous Deployment</h4>
+                        <p><strong>Scenario:</strong> Deploy application to server automatically after successful tests.</p>
+                        <p><strong>Jenkins Pipeline:</strong></p>
+                        <div class="code-block">
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'scp target/app.war user@server:/opt/tomcat/webapps/'
+            }
+        }
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Use Case 3: Scheduled Jobs</h4>
+                        <p><strong>Scenario:</strong> Run database backup every night at 2 AM.</p>
+                        <p><strong>Configuration:</strong></p>
+                        <ul>
+                            <li>Build Triggers → Build periodically</li>
+                            <li>Cron: <code>0 2 * * *</code> (At 2:00 AM every day)</li>
+                            <li>Execute shell: <code>pg_dump mydb > backup.sql</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Docker - Containerization (90 minutes)</h2>
+                
+                <div class="tool-card docker">
+                    <div class="icon">🐳</div>
+                    <h3>What is Docker?</h3>
+                    <p>Docker is a <strong>containerization platform</strong> that packages applications and their dependencies into lightweight, portable containers that run consistently across different environments.</p>
+                    
+                    <div class="features-list">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>✅ Lightweight (shares OS kernel, unlike VMs)</li>
+                            <li>✅ Fast startup (seconds vs minutes for VMs)</li>
+                            <li>✅ Portable (runs anywhere: laptop, cloud, on-premise)</li>
+                            <li>✅ Isolated environments for each application</li>
+                            <li>✅ Version control for infrastructure</li>
+                            <li>✅ Efficient resource usage</li>
+                        </ul>
+                    </div>
+
+                    <h3>Docker Installation (Windows)</h3>
+                    <div class="installation-steps">
+                        <h4>Prerequisites:</h4>
+                        <ul>
+                            <li>Windows 10/11 64-bit: Pro, Enterprise, or Education</li>
+                            <li>Hardware virtualization enabled in BIOS</li>
+                            <li>WSL 2 (Windows Subsystem for Linux)</li>
+                        </ul>
+
+                        <h4>Installation Steps:</h4>
+                        <ol>
+                            <li><strong>Enable WSL 2:</strong>
+                                <div class="code-block">
+<span class="comment"># Open PowerShell as Administrator</span>
+wsl --install
+
+<span class="comment"># Restart computer</span>
+                                </div>
+                            </li>
+                            <li><strong>Download Docker Desktop:</strong>
+                                <ul>
+                                    <li>Visit <code>https://www.docker.com/products/docker-desktop</code></li>
+                                    <li>Download Docker Desktop for Windows</li>
+                                    <li>Run the installer</li>
+                                </ul>
+                            </li>
+                            <li><strong>Install and Restart:</strong>
+                                <ul>
+                                    <li>Follow installation wizard</li>
+                                    <li>Restart computer when prompted</li>
+                                </ul>
+                            </li>
+                            <li><strong>Verify Installation:</strong>
+                                <div class="code-block">
+<span class="comment"># Open Command Prompt or PowerShell</span>
+docker --version
+
+<span class="comment"># Run test container</span>
+docker run hello-world
+
+<span class="comment"># You should see "Hello from Docker!" message</span>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h3>Docker Installation (Linux/Ubuntu)</h3>
+                    <div class="code-block">
+<span class="comment"># Update package index</span>
+sudo apt update
+
+<span class="comment"># Install dependencies</span>
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+
+<span class="comment"># Add Docker's official GPG key</span>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+<span class="comment"># Add Docker repository</span>
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+<span class="comment"># Install Docker</span>
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io -y
+
+<span class="comment"># Start Docker service</span>
+sudo systemctl start docker
+sudo systemctl enable docker
+
+<span class="comment"># Verify installation</span>
+docker --version
+sudo docker run hello-world
+
+<span class="comment"># Add your user to docker group (to run without sudo)</span>
+sudo usermod -aG docker $USER
+<span class="comment"># Log out and log back in for this to take effect</span>
+                    </div>
+
+                    <h3>Essential Vagrant Commands</h3>
+                    <div class="code-block">
+<span class="comment"># Initialize Vagrant project</span>
+vagrant init ubuntu/focal64
+
+<span class="comment"># Start the VM</span>
+vagrant up
+
+<span class="comment"># SSH into the VM</span>
+vagrant ssh
+
+<span class="comment"># Check VM status</span>
+vagrant status
+
+<span class="comment"># Suspend the VM</span>
+vagrant suspend
+
+<span class="comment"># Resume the VM</span>
+vagrant resume
+
+<span class="comment"># Restart the VM</span>
+vagrant reload
+
+<span class="comment"># Stop the VM</span>
+vagrant halt
+
+<span class="comment"># Destroy the VM</span>
+vagrant destroy
+                    </div>
+
+                    <h3>Common Uses of Vagrant</h3>
+                    <div class="use-case">
+                        <h4>Use Case: Team Development Environment</h4>
+                        <p><strong>Problem:</strong> "It works on my machine" syndrome</p>
+                        <p><strong>Solution with Vagrant:</strong></p>
+                        <div class="code-block">
+<span class="comment"># Create Vagrantfile</span>
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  
+  <span class="comment"># Install software automatically</span>
+  config.vm.provision "shell", inline: &lt;&lt;-SHELL
+    apt-get update
+    apt-get install -y nginx nodejs npm
+  SHELL
+end
+
+<span class="comment"># Every team member runs:</span>
+vagrant up
+
+<span class="comment"># Everyone gets identical environment!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 4: Configuration Management Tools (60 minutes)</h2>
+
+                <h3>What is Configuration Management?</h3>
+                <p>Configuration management tools <strong>automate the setup and maintenance of servers</strong>. Instead of manually installing software on each server, you write code that does it automatically.</p>
+
+                <div class="tool-comparison">
+                    <div class="tool-card ansible">
+                        <div class="icon">🔴</div>
+                        <h3>Ansible</h3>
+                        <p><strong>Type:</strong> Agentless (no software needed on managed servers)</p>
+                        <p><strong>Language:</strong> YAML</p>
+                        <p><strong>Best For:</strong> Simple automation, cloud provisioning</p>
+                        
+                        <h4>Installation (Linux):</h4>
+                        <div class="code-block">
+<span class="comment"># Ubuntu/Debian</span>
+sudo apt update
+sudo apt install ansible -y
+
+<span class="comment"># Verify</span>
+ansible --version
+                        </div>
+
+                        <h4>Example Playbook:</h4>
+                        <div class="code-block">
+<span class="comment"># install_nginx.yml</span>
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+    
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+
+<span class="comment"># Run playbook</span>
+ansible-playbook install_nginx.yml
+                        </div>
+
+                        <div class="features-list">
+                            <h4>Pros:</h4>
+                            <ul>
+                                <li>✅ Easy to learn (YAML syntax)</li>
+                                <li>✅ No agent required</li>
+                                <li>✅ Uses SSH (secure)</li>
+                                <li>✅ Fast to get started</li>
+                            </ul>
+                        </div>
+
+                        <div class="use-case">
+                            <h4>Use Case: Deploy to 100 Servers</h4>
+                            <p>Instead of manually SSH-ing to 100 servers to install updates, run one Ansible command!</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-card puppet">
+                        <div class="icon">🟡</div>
+                        <h3>Puppet</h3>
+                        <p><strong>Type:</strong> Agent-based (requires Puppet agent on servers)</p>
+                        <p><strong>Language:</strong> Puppet DSL (Domain Specific Language)</p>
+                        <p><strong>Best For:</strong> Large enterprises, complex infrastructures</p>
+                        
+                        <h4>Installation:</h4>
+                        <div class="code-block">
+<span class="comment"># Install Puppet Master (Ubuntu)</span>
+wget https://apt.puppet.com/puppet7-release-focal.deb
+sudo dpkg -i puppet7-release-focal.deb
+sudo apt update
+sudo apt install puppetserver -y
+
+<span class="comment"># Install Puppet Agent</span>
+sudo apt install puppet-agent -y
+
+<span class="comment"># Start Puppet Server</span>
+sudo systemctl start puppetserver
+sudo systemctl enable puppetserver
+                        </div>
+
+                        <h4>Example Manifest:</h4>
+                        <div class="code-block">
+<span class="comment"># site.pp</span>
+node 'webserver' {
+  package { 'nginx':
+    ensure => installed,
+  }
+  
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+  }
+}
+                        </div>
+
+                        <div class="features-list">
+                            <h4>Pros:</h4>
+                            <ul>
+                                <li>✅ Mature and stable</li>
+                                <li>✅ Strong enterprise support</li>
+                                <li>✅ Excellent reporting</li>
+                                <li>✅ Large module library</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tool-card chef">
+                        <div class="icon">🟠</div>
+                        <h3>Chef</h3>
+                        <p><strong>Type:</strong> Agent-based</p>
+                        <p><strong>Language:</strong> Ruby DSL</p>
+                        <p><strong>Best For:</strong> Complex workflows, cloud automation</p>
+                        
+                        <h4>Installation:</h4>
+                        <div class="code-block">
+<span class="comment"># Install Chef Workstation (Ubuntu)</span>
+wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
+sudo dpkg -i chef-workstation_*.deb
+
+<span class="comment"># Verify</span>
+chef --version
+                        </div>
+
+                        <h4>Example Recipe:</h4>
+                        <div class="code-block">
+<span class="comment"># nginx_recipe.rb</span>
+package 'nginx' do
+  action :install
+end
+
+service 'nginx' do
+  action [:enable, :start]
+end
+
+file '/var/www/html/index.html' do
+  content '&lt;h1&gt;Hello from Chef!&lt;/h1&gt;'
+end
+                        </div>
+
+                        <div class="features-list">
+                            <h4>Pros:</h4>
+                            <ul>
+                                <li>✅ Powerful and flexible</li>
+                                <li>✅ Strong testing framework</li>
+                                <li>✅ Good for compliance automation</li>
+                                <li>✅ Cloud-native features</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Configuration Management Tools Comparison</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Ansible</th>
+                        <th>Puppet</th>
+                        <th>Chef</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Agent Required</strong></td>
+                        <td>❌ No (Agentless)</td>
+                        <td>✅ Yes</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Language</strong></td>
+                        <td>YAML</td>
+                        <td>Puppet DSL</td>
+                        <td>Ruby DSL</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning Curve</strong></td>
+                        <td>Easy</td>
+                        <td>Medium</td>
+                        <td>Steep</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Setup Time</strong></td>
+                        <td>Minutes</td>
+                        <td>Hours</td>
+                        <td>Hours</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Cloud, simple automation</td>
+                        <td>Enterprise, compliance</td>
+                        <td>Complex workflows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Execution</strong></td>
+                        <td>Push (master controls)</td>
+                        <td>Pull (agents check-in)</td>
+                        <td>Pull (agents check-in)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Speed</strong></td>
+                        <td>Fast</td>
+                        <td>Slower (agent overhead)</td>
+                        <td>Slower (agent overhead)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Community</strong></td>
+                        <td>Large and growing</td>
+                        <td>Mature</td>
+                        <td>Mature</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Practical Comparison: Same Task, Different Tools</h2>
+                
+                <div class="practical-demo">
+                    <h3>🎯 Task: Install Nginx on 10 Servers</h3>
+                    
+                    <h4>Manual Way (Traditional):</h4>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <ol>
+                            <li>SSH to server 1: <code>ssh user@server1</code></li>
+                            <li>Run: <code>sudo apt install nginx</code></li>
+                            <li>Start service: <code>sudo systemctl start nginx</code></li>
+                            <li>Repeat for server 2, 3, 4... 10</li>
+                        </ol>
+                        <p><strong>Time:</strong> ~30 minutes</p>
+                        <p><strong>Risk:</strong> Human error, inconsistency</p>
+                    </div>
+
+                    <h4>With Ansible:</h4>
+                    <div class="code-block">
+<span class="comment"># inventory.ini</span>
+[webservers]
+server1.example.com
+server2.example.com
+server3.example.com
+server4.example.com
+server5.example.com
+server6.example.com
+server7.example.com
+server8.example.com
+server9.example.com
+server10.example.com
+
+<span class="comment"># playbook.yml</span>
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+<span class="comment"># Run on all 10 servers at once!</span>
+ansible-playbook -i inventory.ini playbook.yml
+
+<span class="comment"># Time: 2 minutes</span>
+<span class="comment"># Result: All servers configured identically</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Tool Selection Guide</h2>
+
+                <h3>When to Use What?</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Recommended Tool</th>
+                        <th>Why?</th>
+                    </tr>
+                    <tr>
+                        <td>Build and test code automatically</td>
+                        <td><strong>Jenkins</strong></td>
+                        <td>Purpose-built for CI/CD, extensive plugins</td>
+                    </tr>
+                    <tr>
+                        <td>Package application with dependencies</td>
+                        <td><strong>Docker</strong></td>
+                        <td>Lightweight, portable, consistent environments</td>
+                    </tr>
+                    <tr>
+                        <td>Create identical dev environments for team</td>
+                        <td><strong>Vagrant</strong></td>
+                        <td>Full VMs, works with any OS</td>
+                    </tr>
+                    <tr>
+                        <td>Quick server configuration (cloud)</td>
+                        <td><strong>Ansible</strong></td>
+                        <td>Simple, agentless, fast to learn</td>
+                    </tr>
+                    <tr>
+                        <td>Large enterprise with compliance needs</td>
+                        <td><strong>Puppet</strong></td>
+                        <td>Mature, excellent reporting, enterprise support</td>
+                    </tr>
+                    <tr>
+                        <td>Complex infrastructure as code</td>
+                        <td><strong>Chef</strong></td>
+                        <td>Powerful, flexible, strong testing</td>
+                    </tr>
+                </table>
+
+                <div class="key-points">
+                    <h3>💡 Pro Tip: Use Tools Together!</h3>
+                    <p>Modern DevOps workflows combine multiple tools:</p>
+                    <ul>
+                        <li><strong>Development:</strong> Vagrant (local VMs) + Docker (containers)</li>
+                        <li><strong>CI/CD:</strong> Jenkins (automation) + Docker (build environments)</li>
+                        <li><strong>Deployment:</strong> Ansible (server config) + Docker (app deployment)</li>
+                        <li><strong>Infrastructure:</strong> Terraform (provision) + Ansible (configure)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3>🎯 Hands-On Lab Activity (20 minutes)</h3>
+                
+                <h4>Lab 1: Jenkins - Create Your First Job</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Install Jenkins (if not already done)</li>
+                    <li>Access Jenkins at <code>http://localhost:8080</code></li>
+                    <li>Click "New Item" → Enter name "Hello-World" → Select "Freestyle project"</li>
+                    <li>Under "Build" section → Add "Execute shell"</li>
+                    <li>Enter: <code>echo "Hello from Jenkins!"</code></li>
+                    <li>Save and click "Build Now"</li>
+                    <li>Check "Console Output" to see results</li>
+                </ol>
+
+                <h4>Lab 2: Docker - Run Your First Container</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Open terminal/command prompt</li>
+                    <li>Run: <code>docker run -d -p 8080:80 nginx</code></li>
+                    <li>Open browser: <code>http://localhost:8080</code></li>
+                    <li>You should see "Welcome to nginx!" page</li>
+                    <li>Stop container: <code>docker ps</code> (get container ID)</li>
+                    <li><code>docker stop [container-id]</code></li>
+                </ol>
+
+                <h4>Lab 3: Ansible - Configure a Local Server</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Install Ansible (Linux/WSL): <code>sudo apt install ansible -y</code></li>
+                    <li>Create file <code>playbook.yml</code> with Nginx installation tasks</li>
+                    <li>Create <code>inventory.ini</code> with <code>localhost</code></li>
+                    <li>Run: <code>ansible-playbook -i inventory.ini playbook.yml</code></li>
+                    <li>Verify Nginx is installed: <code>systemctl status nginx</code></li>
+                </ol>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Tool Installation Portfolio:</h4>
+                <p>Install all three main tools and document with screenshots:</p>
+                <ul>
+                    <li>Jenkins - Show dashboard and first successful job</li>
+                    <li>Docker - Show <code>docker ps</code> with running container</li>
+                    <li>Ansible/Vagrant - Show successful installation</li>
+                </ul>
+
+                <h4>2. Comparative Analysis:</h4>
+                <p>Create a document comparing:</p>
+                <ul>
+                    <li>Ansible vs Puppet vs Chef (at least 5 differences)</li>
+                    <li>When would you use Docker vs Vagrant?</li>
+                    <li>Give 3 real-world use cases for Jenkins</li>
+                </ul>
+
+                <h4>3. Practical Exercise:</h4>
+                <p>Create a simple Jenkins pipeline that:</p>
+                <ul>
+                    <li>Clones a Git repository (any public repo)</li>
+                    <li>Runs a build command</li>
+                    <li>Takes screenshot of successful build</li>
+                </ul>
+
+                <h4>4. Docker Challenge:</h4>
+                <p>Write a Dockerfile for a simple application:</p>
+                <ul>
+                    <li>Create a simple Python/Node.js "Hello World" app</li>
+                    <li>Write Dockerfile to containerize it</li>
+                    <li>Build and run the container</li>
+                    <li>Document the process with commands used</li>
+                </ul>
+
+                <h4>5. Prepare for Next Session:</h4>
+                <ul>
+                    <li>Read about Git branching strategies</li>
+                    <li>Install Git on your system</li>
+                    <li>Create a GitHub account (if you don't have one)</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz (Knowledge Check)</h3>
+                <ol>
+                    <li>What is the default port for Jenkins?</li>
+                    <li>What command do you use to pull a Docker image?</li>
+                    <li>What is the main advantage of Ansible over Puppet?</li>
+                    <li>What file do you create to configure a Vagrant environment?</li>
+                    <li>What does CI/CD stand for?</li>
+                    <li>Name two differences between Docker containers and virtual machines.</li>
+                    <li>Which configuration management tool uses YAML?</li>
+                    <li>What command starts a Jenkins build?</li>
+                    <li>How do you list running Docker containers?</li>
+                    <li>What is the purpose of a Jenkinsfile?</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li>8080</li>
+                        <li><code>docker pull [image-name]</code></li>
+                        <li>Ansible is agentless (no agent installation required)</li>
+                        <li>Vagrantfile</li>
+                        <li>Continuous Integration / Continuous Delivery (or Deployment)</li>
+                        <li>Containers are lighter, share OS kernel, start faster; VMs have full OS, more isolated</li>
+                        <li>Ansible</li>
+                        <li>Click "Build Now" or trigger via webhook/schedule</li>
+                        <li><code>docker ps</code></li>
+                        <li>Define Jenkins pipeline as code for version control</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                
+                <div class="tool-comparison">
+                    <div class="tool-card jenkins">
+                        <h3>Jenkins</h3>
+                        <ul>
+                            <li>✅ CI/CD automation server</li>
+                            <li>✅ 1800+ plugins</li>
+                            <li>✅ Pipeline as Code</li>
+                            <li><strong>Use for:</strong> Automated builds, testing, deployments</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card docker">
+                        <h3>Docker</h3>
+                        <ul>
+                            <li>✅ Containerization platform</li>
+                            <li>✅ Lightweight and portable</li>
+                            <li>✅ Consistent environments</li>
+                            <li><strong>Use for:</strong> App packaging, microservices</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card vagrant">
+                        <h3>Vagrant</h3>
+                        <ul>
+                            <li>✅ VM environment management</li>
+                            <li>✅ Reproducible dev environments</li>
+                            <li>✅ Configuration as code</li>
+                            <li><strong>Use for:</strong> Team development setup</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-comparison">
+                    <div class="tool-card ansible">
+                        <h3>Ansible</h3>
+                        <ul>
+                            <li>✅ Agentless automation</li>
+                            <li>✅ Simple YAML syntax</li>
+                            <li>✅ Fast to learn</li>
+                            <li><strong>Use for:</strong> Server configuration, cloud automation</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card puppet">
+                        <h3>Puppet</h3>
+                        <ul>
+                            <li>✅ Enterprise-grade</li>
+                            <li>✅ Strong reporting</li>
+                            <li>✅ Mature ecosystem</li>
+                            <li><strong>Use for:</strong> Large-scale infrastructure, compliance</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card chef">
+                        <h3>Chef</h3>
+                        <ul>
+                            <li>✅ Powerful and flexible</li>
+                            <li>✅ Strong testing</li>
+                            <li>✅ Ruby-based</li>
+                            <li><strong>Use for:</strong> Complex workflows, cloud-native apps</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-points">
+                    <h3>Remember:</h3>
+                    <ul>
+                        <li><strong>No single tool does everything</strong> - DevOps uses a combination of tools</li>
+                        <li><strong>Start simple</strong> - Master one tool before moving to the next</li>
+                        <li><strong>Automation is key</strong> - If you do it twice, automate it</li>
+                        <li><strong>Tools evolve</strong> - Stay updated with new versions and features</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-session">
+                <h3>🚀 Coming Up Next</h3>
+                <h2>Module 2: Version Control with GIT</h2>
+                <p>In the next sessions, we'll dive deep into:</p>
+                <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+                    <li>GIT fundamentals and 3-Tree Architecture</li>
+                    <li>Basic GIT operations: Clone, Commit, Push</li>
+                    <li>GitHub project management</li>
+                    <li>Advanced operations: Rebase, Merge, Stash</li>
+                    <li>Branching strategies and collaboration</li>
+                </ul>
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+</html> Docker Commands</h3>
+                    <div class="code-block">
+<span class="comment"># === IMAGE COMMANDS ===</span>
+
+<span class="comment"># Pull an image from Docker Hub</span>
+docker pull nginx
+docker pull ubuntu:20.04
+
+<span class="comment"># List all images</span>
+docker images
+
+<span class="comment"># Remove an image</span>
+docker rmi nginx
+
+<span class="comment"># === CONTAINER COMMANDS ===</span>
+
+<span class="comment"># Run a container</span>
+docker run nginx
+docker run -d nginx  <span class="comment"># Run in background (detached)</span>
+docker run -d -p 8080:80 nginx  <span class="comment"># Map port 8080 to container port 80</span>
+docker run -d --name my-nginx nginx  <span class="comment"># Give container a name</span>
+
+<span class="comment"># List running containers</span>
+docker ps
+
+<span class="comment"># List all containers (including stopped)</span>
+docker ps -a
+
+<span class="comment"># Stop a container</span>
+docker stop my-nginx
+
+<span class="comment"># Start a stopped container</span>
+docker start my-nginx
+
+<span class="comment"># Remove a container</span>
+docker rm my-nginx
+
+<span class="comment"># Execute command in running container</span>
+docker exec -it my-nginx bash
+
+<span class="comment"># View container logs</span>
+docker logs my-nginx
+
+<span class="comment"># === USEFUL COMMANDS ===</span>
+
+<span class="comment"># Build image from Dockerfile</span>
+docker build -t myapp:1.0 .
+
+<span class="comment"># Push image to Docker Hub</span>
+docker push username/myapp:1.0
+
+<span class="comment"># Clean up unused resources</span>
+docker system prune -a
+                    </div>
+
+                    <h3>Common Uses of Docker</h3>
+                    <div class="use-case">
+                        <h4>Use Case 1: Running a Web Server</h4>
+                        <p><strong>Scenario:</strong> Run Nginx web server in seconds</p>
+                        <div class="code-block">
+<span class="comment"># Pull and run Nginx</span>
+docker run -d -p 8080:80 --name webserver nginx
+
+<span class="comment"># Access at http://localhost:8080</span>
+
+<span class="comment"># Stop and remove</span>
+docker stop webserver
+docker rm webserver
+                        </div>
+                        <p><strong>Why Docker?</strong> No need to install Nginx on your system, no configuration conflicts!</p>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Use Case 2: Development Environment</h4>
+                        <p><strong>Scenario:</strong> Create isolated database for testing</p>
+                        <div class="code-block">
+<span class="comment"># Run MySQL container</span>
+docker run -d \
+  --name mysql-dev \
+  -e MYSQL_ROOT_PASSWORD=password123 \
+  -e MYSQL_DATABASE=testdb \
+  -p 3306:3306 \
+  mysql:8.0
+
+<span class="comment"># Connect to MySQL</span>
+docker exec -it mysql-dev mysql -uroot -p
+
+<span class="comment"># When done, remove everything</span>
+docker stop mysql-dev
+docker rm mysql-dev
+                        </div>
+                        <p><strong>Benefit:</strong> Clean database for each test, no leftover data!</p>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Use Case 3: Dockerfile - Custom Application</h4>
+                        <p><strong>Scenario:</strong> Package Node.js app in Docker</p>
+                        <div class="code-block">
+<span class="comment"># Create Dockerfile</span>
+FROM node:16
+
+<span class="comment"># Set working directory</span>
+WORKDIR /app
+
+<span class="comment"># Copy package files</span>
+COPY package*.json ./
+
+<span class="comment"># Install dependencies</span>
+RUN npm install
+
+<span class="comment"># Copy application code</span>
+COPY . .
+</div> <footer>
+            <p>&copy; 2024 DevOps Course | B.Tech CSE 2022 | Course Code: 22CSEDE16</p>
+            <p>Faculty of Engineering and Technology</p>
+        </footer>
+</div></body></html>

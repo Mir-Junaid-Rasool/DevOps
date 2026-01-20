@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 2: SDLC Models & DevOps | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .model-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .waterfall-card {
+            border-top: 5px solid #e74c3c;
+        }
+
+        .agile-card {
+            border-top: 5px solid #27ae60;
+        }
+
+        .model-card h3 {
+            margin-top: 0;
+        }
+
+        .waterfall-card h3 {
+            color: #e74c3c;
+        }
+
+        .agile-card h3 {
+            color: #27ae60;
+        }
+
+        .example-box {
+            background: #e8f4f8;
+            border-left: 4px solid #27ae60;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .example-box h4 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+
+        .practical-demo {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .practical-demo h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .phase-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .phase-step {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .phase-number {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .key-points {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .pros {
+            background: #d4edda;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        .cons {
+            background: #f8d7da;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .pros h4 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .cons h4 {
+            color: #dc3545;
+            margin-top: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .homework h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .quiz {
+            background: #cce5ff;
+            border-left: 4px solid #004085;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .quiz h3 {
+            color: #004085;
+            margin-top: 0;
+        }
+
+        .next-session {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .next-session a {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .next-session a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .sprint-visual {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .sprint-box {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffd700 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 90%;
+            padding: 0.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+
+            .comparison-box,
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 SDLC Models & DevOps</h1>
+            <p>Session 2 | Course Code: 22CSEDE16 | B.Tech CSE 2022</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Session 1: DevOps Fundamentals</a></li>
+                <li><a href="session2.html">Session 2: SDLC & DevOps</a></li>
+                <li><a href="session3.html">Session 3: DevOps Tools</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives">
+                <h2>📚 Learning Objectives</h2>
+                <p>By the end of this session, students will be able to:</p>
+                <ul>
+                    <li>Understand the Waterfall model and its phases</li>
+                    <li>Comprehend the Agile methodology and its principles</li>
+                    <li>Compare and contrast Waterfall vs Agile approaches</li>
+                    <li>Explain how DevOps integrates with and enhances Agile</li>
+                    <li>Apply SDLC concepts to real-world scenarios</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Understanding Software Development Life Cycle (SDLC)</h2>
+                
+                <p><strong>SDLC</strong> is a framework that defines the process used by organizations to build software applications from inception to retirement. It provides a structured approach to software development.</p>
+
+                <div class="key-points">
+                    <h3>Why Do We Need SDLC?</h3>
+                    <ul>
+                        <li><strong>Structure:</strong> Provides a systematic approach to development</li>
+                        <li><strong>Quality:</strong> Ensures high-quality software delivery</li>
+                        <li><strong>Cost Control:</strong> Helps manage budget and resources</li>
+                        <li><strong>Risk Management:</strong> Identifies and mitigates risks early</li>
+                        <li><strong>Communication:</strong> Creates common understanding among stakeholders</li>
+                    </ul>
+                </div>
+
+                <h3>Common SDLC Phases (Universal to Most Models)</h3>
+                <div class="phase-diagram">
+                    <div class="phase-step">
+                        <div class="phase-number">1</div>
+                        <div>
+                            <strong>Planning:</strong> Define project scope, objectives, and feasibility
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">2</div>
+                        <div>
+                            <strong>Requirements Analysis:</strong> Gather and document what the software must do
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">3</div>
+                        <div>
+                            <strong>Design:</strong> Create architecture and detailed design specifications
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">4</div>
+                        <div>
+                            <strong>Implementation/Development:</strong> Write the actual code
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">5</div>
+                        <div>
+                            <strong>Testing:</strong> Verify the software works correctly
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">6</div>
+                        <div>
+                            <strong>Deployment:</strong> Release software to users
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">7</div>
+                        <div>
+                            <strong>Maintenance:</strong> Fix bugs, add features, provide support
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 1: Waterfall Model (90 minutes)</h2>
+
+                <h3>What is the Waterfall Model?</h3>
+                <p>The Waterfall Model is a <strong>sequential, linear approach</strong> to software development where each phase must be completed before the next phase begins. Like a waterfall, progress flows steadily downward through phases.</p>
+
+                <div class="phase-diagram">
+                    <h4>Waterfall Phases (Sequential Flow)</h4>
+                    <div class="phase-step">
+                        <div class="phase-number">1</div>
+                        <div>
+                            <strong>Requirements Gathering & Analysis</strong><br>
+                            <small>Collect all requirements upfront. Create detailed specification documents.</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 1rem 0;">↓</div>
+                    <div class="phase-step">
+                        <div class="phase-number">2</div>
+                        <div>
+                            <strong>System Design</strong><br>
+                            <small>Design system architecture, database schema, UI mockups.</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 1rem 0;">↓</div>
+                    <div class="phase-step">
+                        <div class="phase-number">3</div>
+                        <div>
+                            <strong>Implementation (Coding)</strong><br>
+                            <small>Developers write code based on design documents.</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 1rem 0;">↓</div>
+                    <div class="phase-step">
+                        <div class="phase-number">4</div>
+                        <div>
+                            <strong>Testing</strong><br>
+                            <small>QA team tests the complete system for bugs and issues.</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 1rem 0;">↓</div>
+                    <div class="phase-step">
+                        <div class="phase-number">5</div>
+                        <div>
+                            <strong>Deployment</strong><br>
+                            <small>Release the software to production environment.</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 1rem 0;">↓</div>
+                    <div class="phase-step">
+                        <div class="phase-number">6</div>
+                        <div>
+                            <strong>Maintenance</strong><br>
+                            <small>Fix bugs, provide updates and support.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Key Characteristics of Waterfall</h3>
+                <ul style="margin-left: 2rem; line-height: 2;">
+                    <li><strong>Sequential:</strong> One phase at a time, no overlap</li>
+                    <li><strong>Documentation-Heavy:</strong> Extensive documentation at each phase</li>
+                    <li><strong>Rigid:</strong> Difficult to change requirements once started</li>
+                    <li><strong>Phase Gates:</strong> Must complete and approve each phase before proceeding</li>
+                    <li><strong>Big Bang Deployment:</strong> Everything released at once</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>📋 Practical Example: Building a Banking System (Waterfall)</h4>
+                    <p><strong>Scenario:</strong> A bank wants a new customer management system.</p>
+                    
+                    <p><strong>Month 1-2: Requirements</strong></p>
+                    <ul>
+                        <li>Business analysts meet with bank executives</li>
+                        <li>Document every feature: account creation, deposits, withdrawals, reports</li>
+                        <li>Create 200-page requirements document</li>
+                        <li>Get sign-off from all stakeholders</li>
+                    </ul>
+
+                    <p><strong>Month 3-4: Design</strong></p>
+                    <ul>
+                        <li>Architects design database schema (20+ tables)</li>
+                        <li>Create UI mockups for every screen</li>
+                        <li>Design system architecture diagrams</li>
+                        <li>No coding yet!</li>
+                    </ul>
+
+                    <p><strong>Month 5-10: Implementation</strong></p>
+                    <ul>
+                        <li>Developers write code for all features</li>
+                        <li>Front-end team builds all UI screens</li>
+                        <li>Back-end team implements all APIs</li>
+                        <li>Database team sets up tables and stored procedures</li>
+                    </ul>
+
+                    <p><strong>Month 11-12: Testing</strong></p>
+                    <ul>
+                        <li>QA team receives complete system</li>
+                        <li>Tests all features end-to-end</li>
+                        <li>Finds 200+ bugs (too late to fix major design flaws!)</li>
+                    </ul>
+
+                    <p><strong>Month 13: Deployment</strong></p>
+                    <ul>
+                        <li>Deploy entire system to production</li>
+                        <li>Bank staff see the system for the first time</li>
+                        <li>"This is not what we wanted!" (Requirements changed in 13 months)</li>
+                    </ul>
+
+                    <p><strong>Total Time: 13 months</strong></p>
+                    <p><strong>Problem:</strong> By the time it's deployed, business needs have changed!</p>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Advantages of Waterfall</h4>
+                        <ul>
+                            <li>Simple and easy to understand</li>
+                            <li>Well-documented process</li>
+                            <li>Works well for small, clear projects</li>
+                            <li>Easy to manage (clear milestones)</li>
+                            <li>Good for fixed-price contracts</li>
+                            <li>Suitable for projects with stable requirements</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>❌ Disadvantages of Waterfall</h4>
+                        <ul>
+                            <li>No working software until late in the cycle</li>
+                            <li>Cannot accommodate changing requirements</li>
+                            <li>High risk and uncertainty</li>
+                            <li>Customer sees product only at the end</li>
+                            <li>Testing happens too late</li>
+                            <li>Difficult to estimate time and cost accurately</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>When to Use Waterfall?</h3>
+                <div class="key-points">
+                    <p><strong>Good For:</strong></p>
+                    <ul>
+                        <li>Projects with clear, unchanging requirements (e.g., government contracts)</li>
+                        <li>Small projects with well-understood technology</li>
+                        <li>Projects where documentation is critical (medical devices, aerospace)</li>
+                        <li>Teams geographically distributed with limited communication</li>
+                    </ul>
+                    <p><strong>Not Good For:</strong></p>
+                    <ul>
+                        <li>Complex, long-term projects</li>
+                        <li>Projects where requirements may change</li>
+                        <li>Innovative products where customer feedback is needed</li>
+                        <li>Competitive markets requiring quick releases</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Agile Model (90 minutes)</h2>
+
+                <h3>What is Agile?</h3>
+                <p>Agile is an <strong>iterative and incremental</strong> approach to software development that emphasizes flexibility, collaboration, customer feedback, and rapid delivery of working software.</p>
+
+                <div class="key-points">
+                    <h3>The Agile Manifesto (2001)</h3>
+                    <p>Four core values:</p>
+                    <ul>
+                        <li><strong>Individuals and interactions</strong> over processes and tools</li>
+                        <li><strong>Working software</strong> over comprehensive documentation</li>
+                        <li><strong>Customer collaboration</strong> over contract negotiation</li>
+                        <li><strong>Responding to change</strong> over following a plan</li>
+                    </ul>
+                </div>
+
+                <h3>Agile Principles (12 Key Principles)</h3>
+                <div class="phase-diagram">
+                    <ol style="margin-left: 2rem; line-height: 2;">
+                        <li>Our highest priority is satisfying the customer through early and continuous delivery</li>
+                        <li>Welcome changing requirements, even late in development</li>
+                        <li>Deliver working software frequently (weeks rather than months)</li>
+                        <li>Business people and developers must work together daily</li>
+                        <li>Build projects around motivated individuals</li>
+                        <li>Face-to-face conversation is the best form of communication</li>
+                        <li>Working software is the primary measure of progress</li>
+                        <li>Sustainable development (maintain constant pace)</li>
+                        <li>Continuous attention to technical excellence</li>
+                        <li>Simplicity - maximize the amount of work not done</li>
+                        <li>Self-organizing teams</li>
+                        <li>Regular reflection and adjustment</li>
+                    </ol>
+                </div>
+
+                <h3>How Agile Works: Sprints/Iterations</h3>
+                <div class="sprint-visual">
+                    <h4>Agile Sprint Cycle (Typically 2-4 weeks)</h4>
+                    <div style="text-align: center;">
+                        <div class="sprint-box">Sprint 1<br>(2 weeks)</div>
+                        <div class="sprint-box">Sprint 2<br>(2 weeks)</div>
+                        <div class="sprint-box">Sprint 3<br>(2 weeks)</div>
+                        <div class="sprint-box">Sprint 4<br>(2 weeks)</div>
+                    </div>
+                    <p style="margin-top: 1rem; text-align: center;"><em>Each sprint delivers working software!</em></p>
+                </div>
+
+                <div class="phase-diagram">
+                    <h4>Activities Within Each Sprint:</h4>
+                    <div class="phase-step">
+                        <div class="phase-number">1</div>
+                        <div>
+                            <strong>Sprint Planning:</strong> Team selects features to build (from product backlog)
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">2</div>
+                        <div>
+                            <strong>Daily Standups:</strong> 15-minute daily meetings to sync progress
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">3</div>
+                        <div>
+                            <strong>Development & Testing:</strong> Build and test features simultaneously
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">4</div>
+                        <div>
+                            <strong>Sprint Review:</strong> Demo working software to stakeholders
+                        </div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">5</div>
+                        <div>
+                            <strong>Sprint Retrospective:</strong> Team reflects on what went well and what to improve
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>📋 Practical Example: Building an E-commerce Website (Agile)</h4>
+                    <p><strong>Scenario:</strong> Startup wants to build an online shopping platform.</p>
+                    
+                    <p><strong>Sprint 1 (Weeks 1-2): MVP - Basic Product Listing</strong></p>
+                    <ul>
+                        <li>Day 1-2: Plan features: Show 10 products with images and prices</li>
+                        <li>Day 3-8: Developers build product listing page</li>
+                        <li>Day 9-10: Test and deploy to staging</li>
+                        <li><strong>Result:</strong> Working website with product catalog (deployed!)</li>
+                        <li>Customer feedback: "Great! But we need a search feature"</li>
+                    </ul>
+
+                    <p><strong>Sprint 2 (Weeks 3-4): Add Search & Shopping Cart</strong></p>
+                    <ul>
+                        <li>Adapt based on feedback</li>
+                        <li>Build search functionality</li>
+                        <li>Add basic shopping cart</li>
+                        <li><strong>Result:</strong> Users can now search and add items to cart</li>
+                        <li>Customer feedback: "Perfect! Now add payment"</li>
+                    </ul>
+
+                    <p><strong>Sprint 3 (Weeks 5-6): Payment Integration</strong></p>
+                    <ul>
+                        <li>Integrate payment gateway (Stripe/PayPal)</li>
+                        <li>Add checkout process</li>
+                        <li><strong>Result:</strong> Fully functional e-commerce site!</li>
+                        <li>Already making sales while adding more features</li>
+                    </ul>
+
+                    <p><strong>Sprint 4 (Weeks 7-8): User Accounts & Order History</strong></p>
+                    <ul>
+                        <li>Add user registration/login</li>
+                        <li>Order history and tracking</li>
+                        <li>Keep improving based on real user data</li>
+                    </ul>
+
+                    <p><strong>Total Time to First Release: 2 weeks!</strong></p>
+                    <p><strong>Benefit:</strong> Early customer feedback, revenue from week 6, continuous improvement</p>
+                </div>
+
+                <div class="practical-demo">
+                    <h3>🔧 Practical Demo: Agile User Story</h3>
+                    <p><strong>Format:</strong> As a [type of user], I want [goal] so that [benefit]</p>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <p><strong>Example User Stories for E-commerce:</strong></p>
+                        <ul>
+                            <li>As a <strong>customer</strong>, I want to <strong>search for products by name</strong> so that <strong>I can quickly find what I need</strong></li>
+                            <li>As a <strong>customer</strong>, I want to <strong>save items to wishlist</strong> so that <strong>I can purchase them later</strong></li>
+                            <li>As a <strong>seller</strong>, I want to <strong>view sales analytics</strong> so that <strong>I can track my revenue</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Popular Agile Frameworks</h3>
+                <div class="comparison-box">
+                    <div class="model-card agile-card">
+                        <h3>Scrum</h3>
+                        <ul>
+                            <li>Most popular Agile framework</li>
+                            <li>Fixed-length sprints (1-4 weeks)</li>
+                            <li>Roles: Product Owner, Scrum Master, Dev Team</li>
+                            <li>Ceremonies: Sprint Planning, Daily Standup, Review, Retrospective</li>
+                        </ul>
+                    </div>
+                    <div class="model-card agile-card">
+                        <h3>Kanban</h3>
+                        <ul>
+                            <li>Visual workflow management</li>
+                            <li>Continuous flow (no fixed sprints)</li>
+                            <li>Work-in-progress (WIP) limits</li>
+                            <li>Board: To Do → In Progress → Done</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Advantages of Agile</h4>
+                        <ul>
+                            <li>Early and frequent delivery of working software</li>
+                            <li>Welcomes changing requirements</li>
+                            <li>Continuous customer involvement and feedback</li>
+                            <li>Faster detection and resolution of issues</li>
+                            <li>Higher customer satisfaction</li>
+                            <li>Better team morale and collaboration</li>
+                            <li>Reduced risk (fail fast, learn fast)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>❌ Challenges of Agile</h4>
+                        <ul>
+                            <li>Requires active customer involvement</li>
+                            <li>Less predictable (hard to estimate final cost/time)</li>
+                            <li>Can be chaotic without discipline</li>
+                            <li>Minimal documentation (can be a problem later)</li>
+                            <li>Difficult for distributed teams</li>
+                            <li>Requires experienced team members</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 3: Waterfall vs Agile - Detailed Comparison</h2>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Waterfall</th>
+                        <th>Agile</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Approach</strong></td>
+                        <td>Sequential, linear</td>
+                        <td>Iterative, incremental</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flexibility</strong></td>
+                        <td>Rigid, hard to change</td>
+                        <td>Highly flexible, welcomes change</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Involvement</strong></td>
+                        <td>Only at beginning and end</td>
+                        <td>Continuous throughout project</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery</strong></td>
+                        <td>One big release at the end</td>
+                        <td>Frequent small releases (every 2-4 weeks)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Testing</strong></td>
+                        <td>After development is complete</td>
+                        <td>Continuous testing in each sprint</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentation</strong></td>
+                        <td>Comprehensive and detailed</td>
+                        <td>Minimal, just enough</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Requirements</strong></td>
+                        <td>Fixed at the start</td>
+                        <td>Evolving throughout project</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Team Structure</strong></td>
+                        <td>Hierarchical, specialized roles</td>
+                        <td>Self-organizing, cross-functional</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk</strong></td>
+                        <td>High (discover issues late)</td>
+                        <td>Low (issues discovered early)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost Estimation</strong></td>
+                        <td>Easier to estimate upfront</td>
+                        <td>Difficult to predict final cost</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Clear requirements, stable projects</td>
+                        <td>Evolving requirements, innovative projects</td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h4>🏗️ Real-World Comparison: Building a Mobile App</h4>
+                    
+                    <p><strong>Project:</strong> Social media app for college students</p>
+                    
+                    <table class="comparison-table" style="margin-top: 1rem;">
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Waterfall Approach</th>
+                            <th>Agile Approach</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 1</strong></td>
+                            <td>Gather all requirements</td>
+                            <td>Build basic profile & posting feature → Deploy!</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 2</strong></td>
+                            <td>Design entire app</td>
+                            <td>Add photo sharing → Deploy! Get feedback</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 3</strong></td>
+                            <td>Still designing...</td>
+                            <td>Add messaging feature → Users already active!</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 4-8</strong></td>
+                            <td>Development (no user feedback)</td>
+                            <td>Continuous features based on user data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 9-10</strong></td>
+                            <td>Testing phase</td>
+                            <td>Already have 10,000+ active users</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 11</strong></td>
+                            <td>Finally release! Discover users want different features</td>
+                            <td>Keep iterating based on analytics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Result</strong></td>
+                            <td>Built wrong product, wasted 11 months</td>
+                            <td>Successful app with real users and revenue</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 4: DevOps Integration with Agile (45 minutes)</h2>
+
+                <h3>How DevOps Enhances Agile</h3>
+                <p>While Agile focuses on <span class="highlight">faster development cycles</span>, DevOps extends this to <span class="highlight">deployment and operations</span>. They are complementary practices!</p>
+
+                <div class="key-points">
+                    <h3>The Relationship:</h3>
+                    <ul>
+                        <li><strong>Agile</strong> = Fast development iterations</li>
+                        <li><strong>DevOps</strong> = Fast development + Fast deployment + Continuous monitoring</li>
+                        <li><strong>Together</strong> = Complete pipeline from code to customer</li>
+                    </ul>
+                </div>
+
+                <h3>What Agile Doesn't Address (DevOps Fills the Gap)</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Gap in Agile</th>
+                        <th>How DevOps Addresses It</th>
+                    </tr>
+                    <tr>
+                        <td>Deployment is still manual and slow</td>
+                        <td>Automated CI/CD pipelines</td>
+                    </tr>
+                    <tr>
+                        <td>Dev and Ops still work separately</td>
+                        <td>Unified DevOps team</td>
+                    </tr>
+                    <tr>
+                        <td>No focus on infrastructure automation</td>
+                        <td>Infrastructure as Code (IaC)</td>
+                    </tr>
+                    <tr>
+                        <td>Limited production monitoring</td>
+                        <td>Continuous monitoring and feedback</td>
+                    </tr>
+                    <tr>
+                        <td>Testing may still be delayed</td>
+                        <td>Continuous testing in pipeline</td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h4>🔄 Practical Example: Agile + DevOps in Action</h4>
+                    
+                    <p><strong>Scenario:</strong> Online food delivery app (like Uber Eats)</p>
+                    
+                    <p><strong>Sprint Goal:</strong> Add "Schedule Order for Later" feature</p>
+                    
+                    <p><strong>Day 1 (Monday):</strong> Sprint Planning</p>
+                    <ul>
+                        <li>Team discusses feature requirements</li>
+                        <li>Break down into tasks</li>
+                        <li>Estimate: 5 days of work</li>
+                    </ul>
+
+                    <p><strong>Day 2-4 (Tue-Thu):</strong> Development with DevOps</p>
+                    <div class="code-block">
+// Developer commits code to Git
+git add schedule_order_feature.js
+git commit -m "Add schedule order functionality"
+git push origin feature/schedule-order
+
+// Automated DevOps Pipeline Triggers:
+1. Jenkins automatically starts build
+2. Runs unit tests (10 seconds)
+3. Runs integration tests (2 minutes)
+4. Builds Docker container (1 minute)
+5. Deploys to staging environment (30 seconds)
+6. Runs automated UI tests (3 minutes)
+                    </div>
+                    <p><em>Total time from commit to staging: ~7 minutes!</em></p>
+
+                    <p><strong>Day 5 (Friday):</strong> Sprint Review & Deployment</p>
+                    <ul>
+                        <li>Team demos feature to Product Owner</li>
+                        <li>PO approves</li>
+                        <li>Click "Deploy to Production" button</li>
+                        <li>DevOps pipeline deploys automatically</li>
+                        <li>Feature live to users in 10 minutes!</li>
+                        <li>Monitoring dashboards track user adoption</li>
+                    </ul>
+
+                    <p><strong>DevOps Benefits Added to Agile:</strong></p>
+                    <ul>
+                        <li>✅ Automated testing saves 2 days of manual QA</li>
+                        <li>✅ Automated deployment eliminates week-long deployment process</li>
+                        <li>✅ Real-time monitoring provides immediate user feedback</li>
+                        <li>✅ Can rollback in 1 minute if issues found</li>
+                    </ul>
+                </div>
+
+                <h3>Agile + DevOps: The Perfect Marriage</h3>
+                <div class="comparison-box">
+                    <div class="model-card">
+                        <h3>Agile Alone</h3>
+                        <ul>
+                            <li>2-week sprints</li>
+                            <li>Working software at end of sprint</li>
+                            <li>But... deployment takes 2 weeks</li>
+                            <li>Manual testing delays</li>
+                            <li><strong>Time to customer: 4 weeks</strong></li>
+                        </ul>
+                    </div>
+                    <div class="model-card">
+                        <h3>Agile + DevOps</h3>
+                        <ul>
+                            <li>2-week sprints</li>
+                            <li>Working software at end of sprint</li>
+                            <li>Automated deployment</li>
+                            <li>Continuous testing</li>
+                            <li><strong>Time to customer: 2 weeks!</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="practical-demo">
+                    <h3>🎯 Real Company Example: Spotify</h3>
+                    <p><strong>Challenge:</strong> Release new music features quickly to stay competitive</p>
+                    
+                    <p><strong>Agile Practices Used:</strong></p>
+                    <ul>
+                        <li>2-week sprints</li>
+                        <li>Squads (small cross-functional teams)</li>
+                        <li>User stories and backlog management</li>
+                    </ul>
+
+                    <p><strong>DevOps Practices Added:</strong></p>
+                    <ul>
+                        <li>Automated CI/CD pipeline</li>
+                        <li>Microservices architecture</li>
+                        <li>Feature flags (turn features on/off without deployment)</li>
+                        <li>A/B testing infrastructure</li>
+                        <li>Real-time monitoring and analytics</li>
+                    </ul>
+
+                    <p><strong>Results:</strong></p>
+                    <ul>
+                        <li>Deploy to production multiple times per day</li>
+                        <li>Test new features with 1% of users first</li>
+                        <li>Rollback bad features in seconds</li>
+                        <li>Make data-driven decisions</li>
+                        <li>Stay ahead of competitors (Apple Music, etc.)</li>
+                    </ul>
+                </div>
+
+                <h3>The DevOps Extension to Agile Sprint</h3>
+                <div class="phase-diagram">
+                    <h4>Traditional Agile Sprint (2 weeks):</h4>
+                    <div class="phase-step">
+                        <div class="phase-number">1</div>
+                        <div>Plan → Develop → Test → Demo</div>
+                    </div>
+                    <p style="margin: 1rem 0; text-align: center;"><em>Then wait weeks for deployment...</em></p>
+
+                    <h4>Agile + DevOps Sprint (2 weeks):</h4>
+                    <div class="phase-step">
+                        <div class="phase-number">1</div>
+                        <div>Plan → Develop</div>
+                    </div>
+                    <div class="phase-step" style="border-left-color: #27ae60;">
+                        <div class="phase-number" style="background: #27ae60;">2</div>
+                        <div><strong>Automated Testing</strong> (runs every commit)</div>
+                    </div>
+                    <div class="phase-step" style="border-left-color: #27ae60;">
+                        <div class="phase-number" style="background: #27ae60;">3</div>
+                        <div><strong>Automated Deployment to Staging</strong> (instant)</div>
+                    </div>
+                    <div class="phase-step">
+                        <div class="phase-number">4</div>
+                        <div>Demo</div>
+                    </div>
+                    <div class="phase-step" style="border-left-color: #27ae60;">
+                        <div class="phase-number" style="background: #27ae60;">5</div>
+                        <div><strong>Automated Deployment to Production</strong> (one-click)</div>
+                    </div>
+                    <div class="phase-step" style="border-left-color: #27ae60;">
+                        <div class="phase-number" style="background: #27ae60;">6</div>
+                        <div><strong>Continuous Monitoring</strong> (real-time feedback)</div>
+                    </div>
+                    <p style="margin: 1rem 0; color: #27ae60; font-weight: bold; text-align: center;">
+                        Green steps = DevOps automation!
+                    </p>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3>🎯 Class Activity: Choose Your SDLC Model (15 minutes)</h3>
+                
+                <p><strong>Instructions:</strong> For each scenario below, decide whether Waterfall or Agile would be better, and explain why.</p>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <p><strong>Scenario 1:</strong> Building software for a Mars rover (NASA project)</p>
+                    <ul>
+                        <li>Requirements: Must be absolutely perfect, no chance to update after launch</li>
+                        <li>Timeline: 5 years of development</li>
+                        <li>Risk: Failure means mission failure</li>
+                    </ul>
+                    <p><em>Which model? Why?</em></p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <p><strong>Scenario 2:</strong> Building a new social media app startup</p>
+                    <ul>
+                        <li>Requirements: Unclear, need to test market fit</li>
+                        <li>Competition: Must launch quickly</li>
+                        <li>Users: Need early feedback</li>
+                    </ul>
+                    <p><em>Which model? Why?</em></p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                    <p><strong>Scenario 3:</strong> Building an online ticket booking system</p>
+                    <ul>
+                        <li>Requirements: Well-defined (similar to existing systems)</li>
+                        <li>Customer: Wants to see progress frequently</li>
+                        <li>Timeline: 6 months</li>
+                    </ul>
+                    <p><em>Which model? Why?</em></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                
+                <div class="comparison-box">
+                    <div class="model-card waterfall-card">
+                        <h3>Waterfall Model</h3>
+                        <ul>
+                            <li>✅ Sequential and structured</li>
+                            <li>✅ Good for stable requirements</li>
+                            <li>✅ Heavy documentation</li>
+                            <li>❌ Inflexible to change</li>
+                            <li>❌ Late customer feedback</li>
+                            <li><strong>Best for:</strong> Government projects, medical devices, construction software</li>
+                        </ul>
+                    </div>
+                    <div class="model-card agile-card">
+                        <h3>Agile Model</h3>
+                        <ul>
+                            <li>✅ Iterative and flexible</li>
+                            <li>✅ Welcomes changing requirements</li>
+                            <li>✅ Early and frequent delivery</li>
+                            <li>❌ Less predictable cost/timeline</li>
+                            <li>❌ Requires active customer</li>
+                            <li><strong>Best for:</strong> Web apps, mobile apps, SaaS products</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-points">
+                    <h3>Agile + DevOps = Maximum Velocity</h3>
+                    <ul>
+                        <li><strong>Agile</strong> provides the development methodology</li>
+                        <li><strong>DevOps</strong> provides the automation and deployment infrastructure</li>
+                        <li><strong>Together</strong> they enable continuous delivery of value to customers</li>
+                        <li>Modern software teams use Agile + DevOps together, not separately!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Case Study Analysis:</h4>
+                <p>Research a real company that transitioned from Waterfall to Agile (e.g., ING Bank, Barclays, Adobe). Write a 2-page report covering:</p>
+                <ul>
+                    <li>Why did they make the transition?</li>
+                    <li>What challenges did they face?</li>
+                    <li>What were the results?</li>
+                    <li>Did they also adopt DevOps? If so, how?</li>
+                </ul>
+
+                <h4>2. Practical Exercise:</h4>
+                <p>Imagine you're building a food delivery app. Create:</p>
+                <ul>
+                    <li>5 user stories (use the format: "As a ____, I want ____, so that ____")</li>
+                    <li>Plan 3 sprints (2 weeks each) showing what features would be in each sprint</li>
+                    <li>Explain how DevOps would help accelerate delivery</li>
+                </ul>
+
+                <h4>3. Comparison Table:</h4>
+                <p>Create your own comparison table showing at least 8 differences between Waterfall and Agile. Include real examples for each difference.</p>
+
+                <h4>4. Prepare for Next Session:</h4>
+                <ul>
+                    <li>Read about Jenkins, Docker, Ansible, and Puppet</li>
+                    <li>Watch introductory videos on CI/CD tools</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz (Knowledge Check)</h3>
+                <ol>
+                    <li>What are the main phases of the Waterfall model?</li>
+                    <li>What is a sprint in Agile?</li>
+                    <li>Name two advantages of Agile over Waterfall.</li>
+                    <li>What does the Agile principle "Working software over comprehensive documentation" mean?</li>
+                    <li>How does DevOps complement Agile?</li>
+                    <li>When would you choose Waterfall over Agile?</li>
+                    <li>What is a user story?</li>
+                    <li>What happens in a Daily Standup meeting?</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li>Requirements → Design → Implementation → Testing → Deployment → Maintenance</li>
+                        <li>A fixed time period (1-4 weeks) where the team delivers working software</li>
+                        <li>Flexibility to change, early customer feedback, frequent releases (any two)</li>
+                        <li>Focus on delivering functional software rather than excessive documentation</li>
+                        <li>DevOps adds automation, continuous deployment, and monitoring to Agile's iterative development</li>
+                        <li>When requirements are stable and well-defined, when documentation is critical, for regulated industries</li>
+                        <li>A requirement written from the user's perspective: "As a [user], I want [goal], so that [benefit]"</li>
+                        <li>15-minute daily meeting where team members share: What they did yesterday, what they'll do today, any blockers</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="next-session">
+                <h3>🚀 Next Session Preview</h3>
+                <h2>Session 3: DevOps Tools Ecosystem</h2>
+                <p>We'll explore:</p>
+                <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+                    <li>Continuous Integration & Deployment with Jenkins</li>
+                    <li>Containerization with Docker and Vagrant</li>
+                    <li>Configuration Management: Ansible, Puppet, Chef</li>
+                    <li>Hands-on demonstrations and tool comparisons</li>
+                </ul>
+                <a href="session3.html">Go to Session 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 DevOps Course | B.Tech CSE 2022 | Course Code: 22CSEDE16</p>
+            <p>Faculty of Engineering and Technology</p>
+        </footer>
+    </div>
+</body>
+</html>
