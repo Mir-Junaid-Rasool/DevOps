@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 5: GIT Operations & GitHub | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #24292e 0%, #0366d6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #0366d6;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #0366d6;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #0366d6;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #24292e 0%, #0366d6 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .code-block .comment {
+            color: #95a5a6;
+        }
+
+        .code-block .git-command {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .code-block .output {
+            color: #2ecc71;
+        }
+
+        .workflow-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .workflow-box {
+            background: #e8f4f8;
+            border: 3px solid #0366d6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .workflow-box h4 {
+            color: #0366d6;
+            margin-top: 0;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: #e74c3c;
+            margin: 0.5rem 0;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box h4 {
+            color: #0c5460;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #721c24;
+            margin-top: 0;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .features-list li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #0366d6;
+            font-weight: bold;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .activity-box h4 {
+            color: #fff;
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .homework h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework h4 {
+            color: #fff;
+            margin-top: 1.5rem;
+        }
+
+        .quiz {
+            background: #e9ecef;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #0366d6;
+        }
+
+        .quiz ol {
+            margin-left: 1.5rem;
+        }
+
+        .quiz li {
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .next-session {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .next-session h2 {
+            color: white;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .next-session h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #0366d6;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .github-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .flow-step h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step .step-number {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Session 5: GIT Operations & GitHub</h1>
+            <p>Module 2: Version Control - GIT | DevOps Course (22CSEDE16)</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#clone">GIT Clone</a></li>
+                <li><a href="#push-pull">Push & Pull</a></li>
+                <li><a href="#github">GitHub</a></li>
+                <li><a href="#projects">GitHub Projects</a></li>
+                <li><a href="#lab">Lab Activities</a></li>
+                <li><a href="session6.html">session6</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives" id="objectives">
+                <h2>📋 Session Objectives</h2>
+                <ul>
+                    <li>Understand GIT Clone and its purpose</li>
+                    <li>Master Git Commit, Push, and Pull operations</li>
+                    <li>Learn to create and manage GitHub repositories</li>
+                    <li>Understand GitHub Projects and project management</li>
+                    <li>Connect local repositories to remote GitHub repositories</li>
+                    <li>Collaborate using GitHub features</li>
+                </ul>
+            </div>
+
+            <div class="section" id="clone">
+                <h2>1️⃣ Understanding GIT Clone</h2>
+                
+                <h3>What is GIT Clone?</h3>
+                <p><strong>GIT Clone</strong> is a command that creates a copy of an existing remote repository onto your local machine. When you clone a repository, you get the entire project history and all files.</p>
+
+                <div class="tip-box">
+                    <h4>💡 Why Clone?</h4>
+                    <p>Cloning allows you to:</p>
+                    <ul>
+                        <li>Download existing projects from GitHub</li>
+                        <li>Get the complete version history</li>
+                        <li>Start contributing to open-source projects</li>
+                        <li>Work on team projects locally</li>
+                        <li>Create your own copy of a project</li>
+                    </ul>
+                </div>
+
+                <h3>Clone Command Syntax</h3>
+                <div class="code-block">
+<span class="comment"># Basic clone syntax</span>
+<span class="git-command">git clone</span> &lt;repository-url&gt;
+
+<span class="comment"># Clone with custom directory name</span>
+<span class="git-command">git clone</span> &lt;repository-url&gt; &lt;directory-name&gt;
+
+<span class="comment"># Clone a specific branch</span>
+<span class="git-command">git clone</span> -b &lt;branch-name&gt; &lt;repository-url&gt;
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: Cloning a GitHub Repository</h4>
+                    <div class="code-block">
+<span class="comment"># Clone a repository using HTTPS</span>
+<span class="git-command">git clone</span> https://github.com/username/project-name.git
+
+<span class="output">Cloning into 'project-name'...</span>
+<span class="output">remote: Enumerating objects: 150, done.</span>
+<span class="output">remote: Counting objects: 100% (150/150), done.</span>
+<span class="output">remote: Compressing objects: 100% (95/95), done.</span>
+<span class="output">remote: Total 150 (delta 45), reused 150 (delta 45)</span>
+<span class="output">Receiving objects: 100% (150/150), 1.25 MiB | 2.50 MiB/s, done.</span>
+<span class="output">Resolving deltas: 100% (45/45), done.</span>
+
+<span class="comment"># Navigate into the cloned directory</span>
+cd project-name
+
+<span class="comment"># Check remote connection</span>
+<span class="git-command">git remote -v</span>
+<span class="output">origin  https://github.com/username/project-name.git (fetch)</span>
+<span class="output">origin  https://github.com/username/project-name.git (push)</span>
+                    </div>
+                </div>
+
+                <h3>Clone vs Download ZIP</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>GIT Clone</th>
+                        <th>Download ZIP</th>
+                    </tr>
+                    <tr>
+                        <td>Version History</td>
+                        <td>✅ Complete history included</td>
+                        <td>❌ No history</td>
+                    </tr>
+                    <tr>
+                        <td>GIT Features</td>
+                        <td>✅ Full GIT functionality</td>
+                        <td>❌ Not a GIT repository</td>
+                    </tr>
+                    <tr>
+                        <td>Updates</td>
+                        <td>✅ Easy to pull updates</td>
+                        <td>❌ Must re-download</td>
+                    </tr>
+                    <tr>
+                        <td>Push Changes</td>
+                        <td>✅ Can push back to GitHub</td>
+                        <td>❌ Cannot push</td>
+                    </tr>
+                    <tr>
+                        <td>Remote Connection</td>
+                        <td>✅ Automatically connected</td>
+                        <td>❌ No connection</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>2️⃣ GIT Commit (Detailed)</h2>
+                
+                <h3>Understanding Commits</h3>
+                <p>A <strong>commit</strong> is a snapshot of your project at a specific point in time. Each commit has:</p>
+                
+                <div class="features-list">
+                    <ul>
+                        <li><strong>Unique ID (SHA-1 Hash):</strong> 40-character identifier</li>
+                        <li><strong>Author Information:</strong> Name and email</li>
+                        <li><strong>Timestamp:</strong> When the commit was created</li>
+                        <li><strong>Commit Message:</strong> Description of changes</li>
+                        <li><strong>Changes:</strong> What files were modified</li>
+                        <li><strong>Parent Commit:</strong> Link to previous commit</li>
+                    </ul>
+                </div>
+
+                <h3>Commit Best Practices</h3>
+                <div class="tip-box">
+                    <h4>💡 Writing Good Commit Messages</h4>
+                    <p><strong>Good commit messages should:</strong></p>
+                    <ul>
+                        <li>Start with a verb in present tense (Add, Fix, Update, Remove)</li>
+                        <li>Be concise but descriptive (50 characters or less for title)</li>
+                        <li>Explain WHAT and WHY, not HOW</li>
+                        <li>Use imperative mood ("Add feature" not "Added feature")</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Examples of Good vs Bad Commit Messages</h4>
+                    <table>
+                        <tr>
+                            <th>❌ Bad</th>
+                            <th>✅ Good</th>
+                        </tr>
+                        <tr>
+                            <td>updated file</td>
+                            <td>Add user authentication feature</td>
+                        </tr>
+                        <tr>
+                            <td>fixed bug</td>
+                            <td>Fix login error on mobile devices</td>
+                        </tr>
+                        <tr>
+                            <td>changes</td>
+                            <td>Update README with installation steps</td>
+                        </tr>
+                        <tr>
+                            <td>lol</td>
+                            <td>Remove deprecated API endpoints</td>
+                        </tr>
+                        <tr>
+                            <td>asdf</td>
+                            <td>Refactor database connection logic</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Advanced Commit Commands</h3>
+                <div class="code-block">
+<span class="comment"># Commit with detailed message</span>
+<span class="git-command">git commit -m "Add user profile page" -m "Includes avatar upload and bio editing"</span>
+
+<span class="comment"># Commit all modified files (skip git add)</span>
+<span class="git-command">git commit -a -m "Update styles for homepage"</span>
+
+<span class="comment"># Amend the last commit (fix mistake)</span>
+<span class="git-command">git commit --amend -m "New commit message"</span>
+
+<span class="comment"># View commit details</span>
+<span class="git-command">git show</span> &lt;commit-hash&gt;
+
+<span class="comment"># View commit history with graph</span>
+<span class="git-command">git log --graph --oneline --all</span>
+                </div>
+            </div>
+
+            <div class="section" id="push-pull">
+                <h2>3️⃣ GIT Push - Uploading to GitHub</h2>
+                
+                <h3>What is GIT Push?</h3>
+                <p><strong>GIT Push</strong> uploads your local commits to a remote repository (like GitHub). It synchronizes your local work with the remote server.</p>
+
+                <div class="workflow-diagram">
+                    <h3>Push Workflow</h3>
+                    <div class="workflow-box">
+                        <h4>📁 Local Repository</h4>
+                        <p>Your commits on your computer</p>
+                    </div>
+                    <div class="arrow">⬇️ git push</div>
+                    <div class="workflow-box">
+                        <h4>☁️ Remote Repository (GitHub)</h4>
+                        <p>Commits uploaded to GitHub server</p>
+                    </div>
+                </div>
+
+                <h3>Push Command Syntax</h3>
+                <div class="code-block">
+<span class="comment"># Basic push syntax</span>
+<span class="git-command">git push</span> &lt;remote-name&gt; &lt;branch-name&gt;
+
+<span class="comment"># Most common usage</span>
+<span class="git-command">git push origin main</span>
+
+<span class="comment"># Push and set upstream (first time)</span>
+<span class="git-command">git push -u origin main</span>
+
+<span class="comment"># After setting upstream, just use</span>
+<span class="git-command">git push</span>
+
+<span class="comment"># Force push (DANGEROUS - use with caution!)</span>
+<span class="git-command">git push --force origin main</span>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important: Before Pushing</h4>
+                    <ul>
+                        <li>Always commit your changes first</li>
+                        <li>Make sure you're on the correct branch</li>
+                        <li>Pull latest changes before pushing (to avoid conflicts)</li>
+                        <li>Never force push to shared branches</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: Complete Push Workflow</h4>
+                    <div class="code-block">
+<span class="comment"># 1. Check status</span>
+<span class="git-command">git status</span>
+<span class="output">On branch main</span>
+<span class="output">Changes not staged for commit:</span>
+<span class="output">  modified:   index.html</span>
+
+<span class="comment"># 2. Add files</span>
+<span class="git-command">git add index.html</span>
+
+<span class="comment"># 3. Commit changes</span>
+<span class="git-command">git commit -m "Update homepage layout"</span>
+<span class="output">[main a1b2c3d] Update homepage layout</span>
+<span class="output"> 1 file changed, 15 insertions(+), 5 deletions(-)</span>
+
+<span class="comment"># 4. Push to GitHub</span>
+<span class="git-command">git push origin main</span>
+<span class="output">Enumerating objects: 5, done.</span>
+<span class="output">Counting objects: 100% (5/5), done.</span>
+<span class="output">Delta compression using up to 8 threads</span>
+<span class="output">Writing objects: 100% (3/3), 425 bytes | 425.00 KiB/s, done.</span>
+<span class="output">Total 3 (delta 1), reused 0 (delta 0)</span>
+<span class="output">To https://github.com/username/repo-name.git</span>
+<span class="output">   f9e8d7c..a1b2c3d  main -> main</span>
+                    </div>
+                </div>
+
+                <h2>4️⃣ GIT Pull - Downloading from GitHub</h2>
+                
+                <h3>What is GIT Pull?</h3>
+                <p><strong>GIT Pull</strong> downloads the latest changes from the remote repository and merges them into your local branch. It's essentially <code>git fetch</code> + <code>git merge</code> combined.</p>
+
+                <div class="workflow-diagram">
+                    <h3>Pull Workflow</h3>
+                    <div class="workflow-box">
+                        <h4>☁️ Remote Repository (GitHub)</h4>
+                        <p>Latest commits on GitHub server</p>
+                    </div>
+                    <div class="arrow">⬇️ git pull</div>
+                    <div class="workflow-box">
+                        <h4>📁 Local Repository</h4>
+                        <p>Updates merged into your local code</p>
+                    </div>
+                </div>
+
+                <h3>Pull Command Syntax</h3>
+                <div class="code-block">
+<span class="comment"># Basic pull syntax</span>
+<span class="git-command">git pull</span> &lt;remote-name&gt; &lt;branch-name&gt;
+
+<span class="comment"># Most common usage</span>
+<span class="git-command">git pull origin main</span>
+
+<span class="comment"># After setting upstream</span>
+<span class="git-command">git pull</span>
+
+<span class="comment"># Pull with rebase instead of merge</span>
+<span class="git-command">git pull --rebase origin main</span>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: Pulling Updates</h4>
+                    <div class="code-block">
+<span class="comment"># Pull latest changes from GitHub</span>
+<span class="git-command">git pull origin main</span>
+<span class="output">remote: Enumerating objects: 8, done.</span>
+<span class="output">remote: Counting objects: 100% (8/8), done.</span>
+<span class="output">remote: Compressing objects: 100% (4/4), done.</span>
+<span class="output">remote: Total 6 (delta 2), reused 6 (delta 2)</span>
+<span class="output">Unpacking objects: 100% (6/6), done.</span>
+<span class="output">From https://github.com/username/repo-name</span>
+<span class="output"> * branch            main       -> FETCH_HEAD</span>
+<span class="output">Updating a1b2c3d..e5f6g7h</span>
+<span class="output">Fast-forward</span>
+<span class="output"> README.md | 10 ++++++++--</span>
+<span class="output"> 1 file changed, 8 insertions(+), 2 deletions(-)</span>
+                    </div>
+                </div>
+
+                <h3>Fetch vs Pull</h3>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>git fetch</th>
+                        <th>git pull</th>
+                    </tr>
+                    <tr>
+                        <td>Downloads Changes</td>
+                        <td>✅ Yes</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Merges Changes</td>
+                        <td>❌ No</td>
+                        <td>✅ Yes (automatic)</td>
+                    </tr>
+                    <tr>
+                        <td>Safety</td>
+                        <td>✅ Safer (review first)</td>
+                        <td>⚠️ Can cause conflicts</td>
+                    </tr>
+                    <tr>
+                        <td>Use Case</td>
+                        <td>Review before merging</td>
+                        <td>Quick sync</td>
+                    </tr>
+                </table>
+
+                <div class="code-block">
+<span class="comment"># Fetch: Download without merging</span>
+<span class="git-command">git fetch origin</span>
+<span class="comment"># Review the changes</span>
+<span class="git-command">git log origin/main</span>
+<span class="comment"># Then merge manually</span>
+<span class="git-command">git merge origin/main</span>
+
+<span class="comment"># Pull: Download and merge in one step</span>
+<span class="git-command">git pull origin main</span>
+                </div>
+            </div>
+
+            <div class="section" id="github">
+                <h2>5️⃣ GitHub - Remote Repository Platform</h2>
+                
+                <h3>What is GitHub?</h3>
+                <p><strong>GitHub</strong> is a cloud-based hosting service for Git repositories. It provides a web interface for version control and collaboration, along with access control, bug tracking, feature requests, and more.</p>
+
+                <div class="features-list">
+                    <h4>Key GitHub Features:</h4>
+                    <ul>
+                        <li><strong>Remote Repository Hosting:</strong> Store your code in the cloud</li>
+                        <li><strong>Collaboration Tools:</strong> Work with teams worldwide</li>
+                        <li><strong>Pull Requests:</strong> Code review and merge workflow</li>
+                        <li><strong>Issues:</strong> Track bugs and feature requests</li>
+                        <li><strong>GitHub Actions:</strong> CI/CD automation</li>
+                        <li><strong>GitHub Pages:</strong> Host static websites for free</li>
+                        <li><strong>Wikis:</strong> Documentation for your projects</li>
+                        <li><strong>Social Features:</strong> Star, fork, and follow projects</li>
+                    </ul>
+                </div>
+
+                <h3>Creating a GitHub Repository</h3>
+                
+                <div class="github-flow">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <h4>Sign In</h4>
+                        <p>Log into GitHub.com</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <h4>New Repository</h4>
+                        <p>Click "+" → "New repository"</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <h4>Configure</h4>
+                        <p>Name, description, public/private</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <h4>Initialize</h4>
+                        <p>Add README, .gitignore, license</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Repository Settings</h4>
+                    <table>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Description</th>
+                            <th>Best Practice</th>
+                        </tr>
+                        <tr>
+                            <td>Repository Name</td>
+                            <td>Unique identifier</td>
+                            <td>Use lowercase with hyphens: my-project</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>Brief project summary</td>
+                            <td>Clear, concise, informative</td>
+                        </tr>
+                        <tr>
+                            <td>Public/Private</td>
+                            <td>Visibility setting</td>
+                            <td>Public for open-source, Private for personal</td>
+                        </tr>
+                        <tr>
+                            <td>README.md</td>
+                            <td>Project documentation</td>
+                            <td>Always include for clarity</td>
+                        </tr>
+                        <tr>
+                            <td>.gitignore</td>
+                            <td>Files to ignore</td>
+                            <td>Choose template for your language</td>
+                        </tr>
+                        <tr>
+                            <td>License</td>
+                            <td>Usage permissions</td>
+                            <td>MIT for open-source projects</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Connecting Local Repository to GitHub</h3>
+                
+                <div class="tip-box">
+                    <h4>💡 Two Scenarios</h4>
+                    <p><strong>Scenario 1:</strong> You have a local repository and want to push to GitHub</p>
+                    <p><strong>Scenario 2:</strong> You create GitHub repository first, then clone it</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Scenario 1: Push Existing Local Repo to GitHub</h4>
+                    <div class="code-block">
+<span class="comment"># 1. Create repository on GitHub (without README)</span>
+
+<span class="comment"># 2. Add GitHub as remote</span>
+<span class="git-command">git remote add origin</span> https://github.com/username/repo-name.git
+
+<span class="comment"># 3. Verify remote</span>
+<span class="git-command">git remote -v</span>
+<span class="output">origin  https://github.com/username/repo-name.git (fetch)</span>
+<span class="output">origin  https://github.com/username/repo-name.git (push)</span>
+
+<span class="comment"># 4. Rename branch to main (if needed)</span>
+<span class="git-command">git branch -M main</span>
+
+<span class="comment"># 5. Push to GitHub</span>
+<span class="git-command">git push -u origin main</span>
+<span class="output">Enumerating objects: 15, done.</span>
+<span class="output">Counting objects: 100% (15/15), done.</span>
+<span class="output">Writing objects: 100% (15/15), 2.45 KiB | 2.45 MiB/s, done.</span>
+<span class="output">Total 15 (delta 0), reused 0 (delta 0)</span>
+<span class="output">To https://github.com/username/repo-name.git</span>
+<span class="output"> * [new branch]      main -> main</span>
+<span class="output">Branch 'main' set up to track remote branch 'main' from 'origin'.</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Scenario 2: Clone from GitHub</h4>
+                    <div class="code-block">
+<span class="comment"># 1. Create repository on GitHub (with README)</span>
+
+<span class="comment"># 2. Clone to your computer</span>
+<span class="git-command">git clone</span> https://github.com/username/repo-name.git
+
+<span class="comment"># 3. Navigate into directory</span>
+cd repo-name
+
+<span class="comment"># 4. Start working! Remote is already configured</span>
+<span class="git-command">git remote -v</span>
+<span class="output">origin  https://github.com/username/repo-name.git (fetch)</span>
+<span class="output">origin  https://github.com/username/repo-name.git (push)</span>
+                    </div>
+                </div>
+
+                <h3>GitHub Authentication Methods</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                    <tr>
+                        <td>HTTPS</td>
+                        <td>Username + Personal Access Token</td>
+                        <td>Easy to set up, works everywhere</td>
+                        <td>Need to enter credentials (unless cached)</td>
+                    </tr>
+                    <tr>
+                        <td>SSH</td>
+                        <td>SSH key pair</td>
+                        <td>No password needed, more secure</td>
+                        <td>Initial setup required</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub CLI</td>
+                        <td>gh command-line tool</td>
+                        <td>Modern, integrated workflow</td>
+                        <td>Need to install gh tool</td>
+                    </tr>
+                </table>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important: Password Authentication Removed</h4>
+                    <p>GitHub no longer accepts passwords for Git operations. You must use:</p>
+                    <ul>
+                        <li><strong>Personal Access Token (PAT)</strong> - Generate from Settings → Developer settings</li>
+                        <li><strong>SSH Keys</strong> - More convenient for frequent pushes</li>
+                        <li><strong>GitHub CLI</strong> - Easiest for beginners</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="projects">
+                <h2>6️⃣ GitHub Projects & Management</h2>
+                
+                <h3>What are GitHub Projects?</h3>
+                <p><strong>GitHub Projects</strong> is a project management tool built into GitHub. It helps teams organize and track work using customizable boards, similar to Kanban boards.</p>
+
+                <h3>GitHub Project Features</h3>
+                <div class="features-list">
+                    <ul>
+                        <li><strong>Project Boards:</strong> Visual task management (Table, Board, Roadmap views)</li>
+                        <li><strong>Issues Integration:</strong> Link tasks directly to code issues</li>
+                        <li><strong>Automation:</strong> Auto-move cards based on triggers</li>
+                        <li><strong>Custom Fields:</strong> Add priority, status, assignees</li>
+                        <li><strong>Milestones:</strong> Track progress toward goals</li>
+                        <li><strong>Labels:</strong> Categorize and filter issues</li>
+                    </ul>
+                </div>
+
+                <h3>Creating a GitHub Project</h3>
+                <div class="github-flow">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <h4>Navigate</h4>
+                        <p>Go to your repository → Projects tab</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <h4>Create Project</h4>
+                        <p>Click "New project" button</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <h4>Choose Template</h4>
+                        <p>Kanban, Table, or start from scratch</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <h4>Configure</h4>
+                        <p>Add columns, labels, automation</p>
+                    </div>
+                </div>
+
+                <h3>Common Project Board Columns</h3>
+                <table>
+                    <tr>
+                        <th>Column Name</th>
+                        <th>Purpose</th>
+                        <th>Card Status</th>
+                    </tr>
+                    <tr>
+                        <td>📋 To Do</td>
+                        <td>Tasks not yet started</td>
+                        <td>Backlog items</td>
+                    </tr>
+                    <tr>
+                        <td>🚧 In Progress</td>
+                        <td>Currently being worked on</td>
+                        <td>Active development</td>
+                    </tr>
+                    <tr>
+                        <td>👀 In Review</td>
+                        <td>Code review / testing phase</td>
+                        <td>Awaiting approval</td>
+                    </tr>
+                    <tr>
+                        <td>✅ Done</td>
+                        <td>Completed tasks</td>
+                        <td>Finished and merged</td>
+                    </tr>
+                </table>
+
+                <h3>GitHub Issues - Task Tracking</h3>
+                <p><strong>Issues</strong> are used to track bugs, enhancements, tasks, and questions. They're the building blocks of GitHub Projects.</p>
+
+                <div class="example-box">
+                    <h4>Creating an Issue</h4>
+                    <div class="code-block">
+<span class="comment"># On GitHub web interface:</span>
+1. Go to repository → Issues tab
+2. Click "New issue"
+3. Fill in:
+   - Title: Clear, concise description
+   - Description: Detailed explanation
+   - Assignees: Who will work on it
+   - Labels: bug, enhancement, documentation, etc.
+   - Projects: Link to project board
+   - Milestone: Associate with release version
+4. Click "Submit new issue"
+                    </div>
+                </div>
+
+                <h3>Issue Labels</h3>
+                <table>
+                    <tr>
+                        <th>Label</th>
+                        <th>Color</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>🐛 bug</td>
+                        <td>Red</td>
+                        <td>Something isn't working</td>
+                    </tr>
+                    <tr>
+                        <td>✨ enhancement</td>
+                        <td>Blue</td>
+                        <td>New feature or request</td>
+                    </tr>
+                    <tr>
+                        <td>📝 documentation</td>
+                        <td>Light blue</td>
+                        <td>Improvements to docs</td>
+                    </tr>
+                    <tr>
+                        <td>❓ question</td>
+                        <td>Purple</td>
+                        <td>Further information needed</td>
+                    </tr>
+                    <tr>
+                        <td>⚠️ duplicate</td>
+                        <td>Gray</td>
+                        <td>Already reported issue</td>
+                    </tr>
+                    <tr>
+                        <td>🚀 good first issue</td>
+                        <td>Green</td>
+                        <td>Good for newcomers</td>
+                    </tr>
+                </table>
+
+                <h3>GitHub Hub Management Features</h3>
+                <div class="features-list">
+                    <h4>Repository Management:</h4>
+                    <ul>
+                        <li><strong>Branch Protection:</strong> Prevent direct pushes to main branch</li>
+                        <li><strong>Code Owners:</strong> Auto-request reviews from specific people</li>
+                        <li><strong>Webhooks:</strong> Trigger external services on events</li>
+                        <li><strong>GitHub Actions:</strong> Automate workflows (CI/CD)</li>
+                        <li><strong>Insights:</strong> View traffic, contributors, commits graphs</li>
+                        <li><strong>Settings:</strong> Manage collaborators, access, integrations</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>README.md Best Practices</h4>
+                    <p>A good README should include:</p>
+                    <div class="code-block">
+# Project Title
+
+## Description
+Brief description of what your project does
+
+## Features
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Installation
+```bash
+git clone https://github.com/username/repo-name.git
+cd repo-name
+npm install
+```
+
+## Usage
+```bash
+npm start
+```
+
+## Technologies Used
+- HTML, CSS, JavaScript
+- Node.js, Express
+- MongoDB
+
+## Contributing
+Contributions welcome! Please read CONTRIBUTING.md
+
+## License
+MIT License
+
+## Contact
+- Email: your.email@example.com
+- GitHub: @yourusername
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-box" id="lab">
+                <h3>🎯 Hands-On Lab Activities</h3>
+                
+                <h4>Lab 1: Clone a Repository</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Go to https://github.com/octocat/Hello-World</li>
+                    <li>Click the green "Code" button</li>
+                    <li>Copy the HTTPS URL</li>
+                    <li>Open terminal and run:
+                        <div class="code-block">
+<span class="git-command">git clone</span> https://github.com/octocat/Hello-World.git
+cd Hello-World
+<span class="git-command">git log</span>
+                        </div>
+                    </li>
+                    <li>Explore the repository files and history</li>
+                </ol>
+
+                <h4>Lab 2: Create Your First GitHub Repository</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Go to GitHub.com and sign in</li>
+                    <li>Click "+" → "New repository"</li>
+                    <li>Repository name: "my-first-devops-repo"</li>
+                    <li>Description: "Learning DevOps with GIT and GitHub"</li>
+                    <li>Select "Public"</li>
+                    <li>Check "Add a README file"</li>
+                    <li>Add .gitignore: Choose "Python" or "Node"</li>
+                    <li>License: MIT License</li>
+                    <li>Click "Create repository"</li>
+                </ol>
+
+                <h4>Lab 3: Push Local Project to GitHub</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Create a new local project:
+                        <div class="code-block">
+mkdir devops-demo
+cd devops-demo
+<span class="git-command">git init</span>
+                        </div>
+                    </li>
+                    <li>Create some files:
+                        <div class="code-block">
+echo "# DevOps Demo Project" > README.md
+echo "console.log('Hello DevOps!');" > app.js
+                        </div>
+                    </li>
+                    <li>Commit locally:
+                        <div class="code-block">
+<span class="git-command">git add .</span>
+<span class="git-command">git commit -m "Initial commit"</span>
+                        </div>
+                    </li>
+                    <li>Create a new repository on GitHub (without README)</li>
+                    <li>Connect and push:
+                        <div class="code-block">
+<span class="git-command">git remote add origin</span> https://github.com/your-username/devops-demo.git
+<span class="git-command">git branch -M main</span>
+<span class="git-command">git push -u origin main</span>
+                        </div>
+                    </li>
+                    <li>Refresh GitHub page to see your code!</li>
+                </ol>
+
+                <h4>Lab 4: Practice Pull Workflow</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>On GitHub, edit README.md directly (using web interface)</li>
+                    <li>Add a line: "Updated from GitHub web interface"</li>
+                    <li>Commit the change</li>
+                    <li>In your local terminal:
+                        <div class="code-block">
+<span class="comment"># Pull the changes</span>
+<span class="git-command">git pull origin main</span>
+
+<span class="comment"># Verify the update</span>
+cat README.md
+                        </div>
+                    </li>
+                    <li>You should see the new line!</li>
+                </ol>
+
+                <h4>Lab 5: Create a GitHub Project Board</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Go to your repository → Projects tab</li>
+                    <li>Click "New project"</li>
+                    <li>Choose "Board" template</li>
+                    <li>Name it "DevOps Learning Tracker"</li>
+                    <li>Create columns: To Do, In Progress, Done</li>
+                    <li>Add cards:
+                        <ul>
+                            <li>"Learn GIT basics"</li>
+                            <li>"Create GitHub account"</li>
+                            <li>"Push first project"</li>
+                            <li>"Learn branching"</li>
+                        </ul>
+                    </li>
+                    <li>Move cards between columns as you progress</li>
+                </ol>
+
+                <h4>Challenge: Complete Push-Pull-Push Cycle</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Make a change locally (add a new file)</li>
+                    <li>Commit and push to GitHub</li>
+                    <li>Make a change on GitHub (edit file via web)</li>
+                    <li>Pull changes to local</li>
+                    <li>Make another local change</li>
+                    <li>Pull first (best practice), then push</li>
+                    <li>Document each step with screenshots</li>
+                </ol>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Personal Portfolio Project:</h4>
+                <ul>
+                    <li>Create a new GitHub repository called "my-portfolio"</li>
+                    <li>Clone it to your computer</li>
+                    <li>Create a simple portfolio website with:
+                        <ul>
+                            <li>index.html (homepage with your name and bio)</li>
+                            <li>style.css (basic styling)</li>
+                            <li>projects.html (list of your projects)</li>
+                            <li>contact.html (your contact info)</li>
+                        </ul>
+                    </li>
+                    <li>Make at least 5 commits with meaningful messages</li>
+                    <li>Push all changes to GitHub</li>
+                    <li>Share the GitHub repository link</li>
+                </ul>
+
+                <h4>2. Practice Clone-Modify-Push:</h4>
+                <ul>
+                    <li>Clone a public repository (e.g., any interesting GitHub project)</li>
+                    <li>Create your own fork (optional)</li>
+                    <li>Read the README.md</li>
+                    <li>Document what the project does</li>
+                    <li>Explore the commit history using <code>git log</code></li>
+                </ul>
+
+                <h4>3. Create Project Board:</h4>
+                <ul>
+                    <li>Create a Project Board in your repository</li>
+                    <li>Add at least 10 tasks related to your learning journey</li>
+                    <li>Organize them into To Do, In Progress, Done</li>
+                    <li>Create 3 issues for actual bugs or features you want to add</li>
+                    <li>Link issues to your project board</li>
+                </ul>
+
+                <h4>4. Write a Professional README:</h4>
+                <ul>
+                    <li>Update README.md in your portfolio repository</li>
+                    <li>Include:
+                        <ul>
+                            <li>Project title and description</li>
+                            <li>Features list</li>
+                            <li>Technologies used</li>
+                            <li>Installation instructions</li>
+                            <li>Screenshots (optional)</li>
+                            <li>Your contact information</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>5. Understanding Questions:</h4>
+                <p>Answer in your own words:</p>
+                <ul>
+                    <li>What is the difference between git clone and downloading a ZIP file?</li>
+                    <li>Explain the workflow: Clone → Modify → Commit → Push</li>
+                    <li>What is the purpose of git pull? When should you use it?</li>
+                    <li>What are the benefits of using GitHub Projects?</li>
+                    <li>How do issues help in project management?</li>
+                </ul>
+
+                <h4>6. Command Practice:</h4>
+                <p>Document the commands for these scenarios:</p>
+                <ul>
+                    <li>Clone a repository from GitHub</li>
+                    <li>Check remote repository URL</li>
+                    <li>Add a new remote repository</li>
+                    <li>Push to main branch for the first time</li>
+                    <li>Pull latest changes from GitHub</li>
+                    <li>View remote branches</li>
+                </ul>
+
+                <h4>7. Prepare for Next Session:</h4>
+                <ul>
+                    <li>Read about Git Rebase and Merge</li>
+                    <li>Understand what Git Stash does</li>
+                    <li>Learn about Git Reset and Checkout</li>
+                    <li>Watch: "Git Branching and Merging" tutorial</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz (Knowledge Check)</h3>
+                <ol>
+                    <li>What does <code>git clone</code> do?</li>
+                    <li>What's the difference between <code>git fetch</code> and <code>git pull</code>?</li>
+                    <li>What command pushes your code to GitHub?</li>
+                    <li>What does <code>git remote -v</code> show?</li>
+                    <li>What should you do before pushing code to GitHub?</li>
+                    <li>What is the purpose of GitHub Projects?</li>
+                    <li>What are GitHub Issues used for?</li>
+                    <li>Name three things a good README.md should include.</li>
+                    <li>What does <code>git push -u origin main</code> do?</li>
+                    <li>Why is it important to pull before pushing?</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li>Creates a copy of a remote repository on your local machine</li>
+                        <li><code>git fetch</code> downloads changes but doesn't merge; <code>git pull</code> downloads and merges automatically</li>
+                        <li><code>git push origin main</code> (or just <code>git push</code> after setting upstream)</li>
+                        <li>Shows the remote repository URLs for fetch and push</li>
+                        <li>Commit your changes and pull latest updates from remote</li>
+                        <li>To organize and track project tasks visually using boards</li>
+                        <li>To track bugs, enhancements, tasks, and questions</li>
+                        <li>Description, installation instructions, usage, technologies, contact info</li>
+                        <li>Pushes to main branch and sets upstream tracking</li>
+                        <li>To avoid conflicts and ensure you have the latest code before pushing your changes</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                
+                <div class="features-list">
+                    <h4>Essential Concepts:</h4>
+                    <ul>
+                        <li>✅ <strong>git clone</strong> copies a remote repository to your local machine</li>
+                        <li>✅ <strong>git push</strong> uploads local commits to remote repository</li>
+                        <li>✅ <strong>git pull</strong> downloads and merges remote changes</li>
+                        <li>✅ <strong>GitHub</strong> is a cloud platform for hosting Git repositories</li>
+                        <li>✅ <strong>Remote</strong> is a version of your repository hosted elsewhere</li>
+                        <li>✅ <strong>Origin</strong> is the default name for your remote repository</li>
+                        <li>✅ <strong>GitHub Projects</strong> help manage tasks visually</li>
+                        <li>✅ <strong>Issues</strong> track bugs, features, and questions</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Remember the Remote Workflow:</h4>
+                    <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+                        <strong>Clone → Edit → Add → Commit → Pull → Push → Repeat</strong>
+                    </p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Golden Rules:</h4>
+                    <ul>
+                        <li>Always pull before you push</li>
+                        <li>Never force push to shared branches</li>
+                        <li>Write clear commit messages</li>
+                        <li>Keep your repository organized</li>
+                        <li>Use .gitignore to exclude unnecessary files</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-session">
+                <h3>🚀 Next Session Preview</h3>
+                <h2>Session 6: Advanced GIT Operations</h2>
+                <p>In the next session, we'll explore:</p>
+                <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+                    <li>Git Rebase & Merge - Different ways to integrate changes</li>
+                    <li>Git Stash - Temporarily save changes without committing</li>
+                    <li>Git Reset - Undo commits and changes</li>
+                    <li>Git Checkout - Switch branches and restore files</li>
+                    <li>Advanced Git workflows and best practices</li>
+                    <li>Resolving merge conflicts</li>
+                </ul>
+                <a href="session6.html" style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: white; color: #11998e; text-decoration: none; border-radius: 5px; font-weight: bold;">Continue to Session 6 →</a>
+            </div>
+        </div>
+
+        <footer style="background: #2c3e50; color: white; text-align: center; padding: 2rem;">
+            <p>&copy; 2024 DevOps Course - Session 5 | B.Tech Computer Science and Engineering</p>
+            <p>Course Code: 22CSEDE16 | Module 2: Version Control - GIT</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                <a href="#" style="color: #3498db; text-decoration: none;">← Previous Session</a> | 
+                <a href="session6.html" style="color: #3498db; text-decoration: none;">Next Session →</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

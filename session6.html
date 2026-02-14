@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6: Advanced GIT Operations | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #f05033 0%, #e84118 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #f05033;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #f05033;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #f05033 0%, #e84118 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .code-block .comment {
+            color: #95a5a6;
+        }
+
+        .code-block .git-command {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .code-block .output {
+            color: #2ecc71;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box h4 {
+            color: #0c5460;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #721c24;
+            margin-top: 0;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .features-list li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #f05033;
+            font-weight: bold;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .activity-box h4 {
+            color: #fff;
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .homework {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .homework h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework h4 {
+            color: #fff;
+            margin-top: 1.5rem;
+        }
+
+        .quiz {
+            background: #e9ecef;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #f05033;
+        }
+
+        .quiz ol {
+            margin-left: 1.5rem;
+        }
+
+        .quiz li {
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #f05033;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Session 6: Advanced GIT Operations</h1>
+            <p>Module 2: Version Control - GIT | DevOps Course (22CSEDE16)</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Home</a></li>
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#merge">Merge</a></li>
+                <li><a href="#rebase">Rebase</a></li>
+                <li><a href="#stash">Stash</a></li>
+                <li><a href="#reset">Reset</a></li>
+                <li><a href="#checkout">Checkout</a></li>
+                <li><a href="#lab">Lab</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives" id="objectives">
+                <h2>📋 Session Objectives</h2>
+                <ul>
+                    <li>Master Git Merge and Rebase strategies</li>
+                    <li>Understand when to use Merge vs Rebase</li>
+                    <li>Learn Git Stash for temporary code storage</li>
+                    <li>Practice Git Reset to undo changes</li>
+                    <li>Use Git Checkout to switch branches and restore files</li>
+                    <li>Handle merge conflicts effectively</li>
+                </ul>
+            </div>
+
+            <div class="section" id="merge">
+                <h2>1️⃣ GIT Merge</h2>
+                
+                <h3>What is Git Merge?</h3>
+                <p><strong>Git Merge</strong> combines changes from different branches. It creates a new commit that brings together the histories of both branches.</p>
+
+                <div class="code-block">
+<span class="comment"># Basic merge syntax</span>
+<span class="git-command">git merge</span> &lt;branch-name&gt;
+
+<span class="comment"># Example: Merge feature branch into main</span>
+<span class="git-command">git checkout main</span>
+<span class="git-command">git merge feature-branch</span>
+                </div>
+
+                <div class="example-box">
+                    <h4>Complete Merge Workflow</h4>
+                    <div class="code-block">
+<span class="comment"># 1. Create and switch to new branch</span>
+<span class="git-command">git checkout -b feature-login</span>
+
+<span class="comment"># 2. Make changes and commit</span>
+echo "Login feature" > login.html
+<span class="git-command">git add login.html</span>
+<span class="git-command">git commit -m "Add login feature"</span>
+
+<span class="comment"># 3. Switch back to main</span>
+<span class="git-command">git checkout main</span>
+
+<span class="comment"># 4. Merge feature into main</span>
+<span class="git-command">git merge feature-login</span>
+<span class="output">Updating a1b2c3d..e5f6g7h</span>
+<span class="output">Fast-forward</span>
+<span class="output"> login.html | 1 +</span>
+<span class="output"> 1 file changed, 1 insertion(+)</span>
+                    </div>
+                </div>
+
+                <h3>Types of Merges</h3>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>When It Happens</th>
+                    </tr>
+                    <tr>
+                        <td>Fast-Forward</td>
+                        <td>Simply moves pointer forward</td>
+                        <td>When no diverging changes exist</td>
+                    </tr>
+                    <tr>
+                        <td>Three-Way Merge</td>
+                        <td>Creates new merge commit</td>
+                        <td>When both branches have changes</td>
+                    </tr>
+                    <tr>
+                        <td>Squash Merge</td>
+                        <td>Combines all commits into one</td>
+                        <td>When you want clean history</td>
+                    </tr>
+                </table>
+
+                <h3>Handling Merge Conflicts</h3>
+                <div class="warning-box">
+                    <h4>⚠️ What is a Merge Conflict?</h4>
+                    <p>A conflict occurs when Git can't automatically merge changes because the same lines were modified in both branches.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Resolving Merge Conflicts</h4>
+                    <div class="code-block">
+<span class="comment"># Attempt merge</span>
+<span class="git-command">git merge feature-branch</span>
+<span class="output">Auto-merging index.html</span>
+<span class="output">CONFLICT (content): Merge conflict in index.html</span>
+<span class="output">Automatic merge failed; fix conflicts and then commit the result.</span>
+
+<span class="comment"># Check conflict status</span>
+<span class="git-command">git status</span>
+<span class="output">Unmerged paths:</span>
+<span class="output">  both modified:   index.html</span>
+
+<span class="comment"># Open index.html - you'll see:</span>
+<<<<<<< HEAD
+&lt;h1&gt;Welcome to Main Branch&lt;/h1&gt;
+=======
+&lt;h1&gt;Welcome to Feature Branch&lt;/h1&gt;
+>>>>>>> feature-branch
+
+<span class="comment"># Edit file to keep what you want</span>
+<span class="comment"># Remove conflict markers</span>
+&lt;h1&gt;Welcome to Our Website&lt;/h1&gt;
+
+<span class="comment"># Mark as resolved</span>
+<span class="git-command">git add index.html</span>
+<span class="git-command">git commit -m "Resolve merge conflict"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="rebase">
+                <h2>2️⃣ GIT Rebase</h2>
+                
+                <h3>What is Git Rebase?</h3>
+                <p><strong>Git Rebase</strong> rewrites commit history by moving commits to a new base. It creates a linear, cleaner history.</p>
+
+                <div class="code-block">
+<span class="comment"># Basic rebase syntax</span>
+<span class="git-command">git rebase</span> &lt;base-branch&gt;
+
+<span class="comment"># Example: Rebase feature onto main</span>
+<span class="git-command">git checkout feature-branch</span>
+<span class="git-command">git rebase main</span>
+                </div>
+
+                <h3>Merge vs Rebase</h3>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Merge</th>
+                        <th>Rebase</th>
+                    </tr>
+                    <tr>
+                        <td>History</td>
+                        <td>Preserves complete history</td>
+                        <td>Creates linear history</td>
+                    </tr>
+                    <tr>
+                        <td>Commits</td>
+                        <td>Creates merge commit</td>
+                        <td>Replays commits on top</td>
+                    </tr>
+                    <tr>
+                        <td>Use Case</td>
+                        <td>Integrating feature branches</td>
+                        <td>Keeping feature branch updated</td>
+                    </tr>
+                    <tr>
+                        <td>Safety</td>
+                        <td>✅ Safe for shared branches</td>
+                        <td>⚠️ Never rebase public branches</td>
+                    </tr>
+                    <tr>
+                        <td>Conflicts</td>
+                        <td>Resolve once</td>
+                        <td>May resolve multiple times</td>
+                    </tr>
+                </table>
+
+                <div class="warning-box">
+                    <h4>⚠️ Golden Rule of Rebase</h4>
+                    <p><strong>Never rebase commits that have been pushed to a public/shared repository!</strong></p>
+                    <p>Only rebase local commits that haven't been shared with others.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Interactive Rebase</h4>
+                    <div class="code-block">
+<span class="comment"># Interactive rebase last 3 commits</span>
+<span class="git-command">git rebase -i HEAD~3</span>
+
+<span class="comment"># Editor opens with:</span>
+pick a1b2c3d Add login form
+pick e5f6g7h Fix validation
+pick i9j0k1l Update styles
+
+<span class="comment"># Commands available:</span>
+<span class="comment"># pick (p) = use commit</span>
+<span class="comment"># reword (r) = use commit, but edit message</span>
+<span class="comment"># edit (e) = use commit, but stop for amending</span>
+<span class="comment"># squash (s) = combine with previous commit</span>
+<span class="comment"># drop (d) = remove commit</span>
+
+<span class="comment"># Example: Squash last two commits</span>
+pick a1b2c3d Add login form
+squash e5f6g7h Fix validation
+squash i9j0k1l Update styles
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="stash">
+                <h2>3️⃣ GIT Stash</h2>
+                
+                <h3>What is Git Stash?</h3>
+                <p><strong>Git Stash</strong> temporarily saves your uncommitted changes, allowing you to switch contexts without committing incomplete work.</p>
+
+                <div class="tip-box">
+                    <h4>💡 When to Use Stash?</h4>
+                    <ul>
+                        <li>Need to switch branches but work isn't ready to commit</li>
+                        <li>Want to pull latest changes without committing</li>
+                        <li>Emergency bug fix needed on another branch</li>
+                        <li>Experiment with code without losing current work</li>
+                    </ul>
+                </div>
+
+                <h3>Basic Stash Commands</h3>
+                <div class="code-block">
+<span class="comment"># Save changes to stash</span>
+<span class="git-command">git stash</span>
+<span class="output">Saved working directory and index state WIP on main</span>
+
+<span class="comment"># Stash with message</span>
+<span class="git-command">git stash save "Work in progress on login"</span>
+
+<span class="comment"># List all stashes</span>
+<span class="git-command">git stash list</span>
+<span class="output">stash@{0}: WIP on main: a1b2c3d Add login</span>
+<span class="output">stash@{1}: WIP on main: e5f6g7h Fix bug</span>
+
+<span class="comment"># Apply most recent stash</span>
+<span class="git-command">git stash apply</span>
+
+<span class="comment"># Apply specific stash</span>
+<span class="git-command">git stash apply stash@{1}</span>
+
+<span class="comment"># Apply and remove from stash list</span>
+<span class="git-command">git stash pop</span>
+
+<span class="comment"># Delete stash</span>
+<span class="git-command">git stash drop stash@{0}</span>
+
+<span class="comment"># Clear all stashes</span>
+<span class="git-command">git stash clear</span>
+
+<span class="comment"># Show stash contents</span>
+<span class="git-command">git stash show</span>
+                </div>
+
+                <div class="example-box">
+                    <h4>Practical Stash Workflow</h4>
+                    <div class="code-block">
+<span class="comment"># Working on feature branch</span>
+<span class="git-command">git checkout feature-payment</span>
+<span class="comment"># Making changes...</span>
+
+<span class="comment"># Urgent bug reported! Need to switch to main</span>
+<span class="git-command">git stash save "Payment integration incomplete"</span>
+
+<span class="comment"># Switch to main and fix bug</span>
+<span class="git-command">git checkout main</span>
+<span class="comment"># Fix bug, commit</span>
+
+<span class="comment"># Return to feature work</span>
+<span class="git-command">git checkout feature-payment</span>
+<span class="git-command">git stash pop</span>
+<span class="output">On branch feature-payment</span>
+<span class="output">Changes not staged for commit:</span>
+<span class="output">  modified:   payment.js</span>
+<span class="output">Dropped refs/stash@{0}</span>
+
+<span class="comment"># Continue working!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="reset">
+                <h2>4️⃣ GIT Reset</h2>
+                
+                <h3>What is Git Reset?</h3>
+                <p><strong>Git Reset</strong> moves the current branch pointer to a different commit, effectively "undoing" commits.</p>
+
+                <h3>Three Types of Reset</h3>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Working Directory</th>
+                        <th>Staging Area</th>
+                        <th>Commits</th>
+                    </tr>
+                    <tr>
+                        <td>--soft</td>
+                        <td>Unchanged</td>
+                        <td>Unchanged</td>
+                        <td>Reset</td>
+                    </tr>
+                    <tr>
+                        <td>--mixed (default)</td>
+                        <td>Unchanged</td>
+                        <td>Reset</td>
+                        <td>Reset</td>
+                    </tr>
+                    <tr>
+                        <td>--hard</td>
+                        <td>Reset</td>
+                        <td>Reset</td>
+                        <td>Reset</td>
+                    </tr>
+                </table>
+
+                <div class="code-block">
+<span class="comment"># Soft reset - keep changes staged</span>
+<span class="git-command">git reset --soft HEAD~1</span>
+
+<span class="comment"># Mixed reset - keep changes unstaged (default)</span>
+<span class="git-command">git reset HEAD~1</span>
+<span class="git-command">git reset --mixed HEAD~1</span>
+
+<span class="comment"># Hard reset - discard all changes ⚠️ DANGEROUS!</span>
+<span class="git-command">git reset --hard HEAD~1</span>
+
+<span class="comment"># Reset to specific commit</span>
+<span class="git-command">git reset --hard a1b2c3d</span>
+
+<span class="comment"># Unstage file (mixed reset)</span>
+<span class="git-command">git reset HEAD file.txt</span>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Warning: Git Reset is Destructive</h4>
+                    <p><code>git reset --hard</code> permanently deletes changes. Use with extreme caution!</p>
+                    <p>Never reset commits that have been pushed to remote repositories.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Common Reset Scenarios</h4>
+                    <div class="code-block">
+<span class="comment"># Scenario 1: Undo last commit, keep changes</span>
+<span class="git-command">git reset --soft HEAD~1</span>
+<span class="comment"># Changes still staged, can re-commit</span>
+
+<span class="comment"># Scenario 2: Unstage files</span>
+<span class="git-command">git add .</span>
+<span class="git-command">git reset</span>
+<span class="comment"># Files unstaged but changes preserved</span>
+
+<span class="comment"># Scenario 3: Discard all local changes</span>
+<span class="git-command">git reset --hard HEAD</span>
+<span class="comment"># ⚠️ All uncommitted changes DELETED!</span>
+
+<span class="comment"># Scenario 4: Go back 3 commits</span>
+<span class="git-command">git reset --hard HEAD~3</span>
+<span class="comment"># Last 3 commits removed, changes deleted</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="checkout">
+                <h2>5️⃣ GIT Checkout</h2>
+                
+                <h3>What is Git Checkout?</h3>
+                <p><strong>Git Checkout</strong> switches between branches or restores files. It's a versatile command with multiple uses.</p>
+
+                <h3>Checkout Uses</h3>
+                <div class="features-list">
+                    <ul>
+                        <li>Switch between branches</li>
+                        <li>Create and switch to new branch</li>
+                        <li>Restore files from specific commits</li>
+                        <li>Discard local changes in files</li>
+                        <li>View old versions of files</li>
+                    </ul>
+                </div>
+
+                <h3>Common Checkout Commands</h3>
+                <div class="code-block">
+<span class="comment"># Switch to existing branch</span>
+<span class="git-command">git checkout branch-name</span>
+
+<span class="comment"># Create and switch to new branch</span>
+<span class="git-command">git checkout -b new-branch</span>
+
+<span class="comment"># Discard changes in file</span>
+<span class="git-command">git checkout -- file.txt</span>
+
+<span class="comment"># Restore file from specific commit</span>
+<span class="git-command">git checkout a1b2c3d -- file.txt</span>
+
+<span class="comment"># Checkout specific commit (detached HEAD)</span>
+<span class="git-command">git checkout a1b2c3d</span>
+
+<span class="comment"># Return to branch from detached HEAD</span>
+<span class="git-command">git checkout main</span>
+
+<span class="comment"># Checkout remote branch</span>
+<span class="git-command">git checkout -b local-branch origin/remote-branch</span>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Git Switch & Restore (Modern Alternatives)</h4>
+                    <p>Git 2.23+ introduced clearer commands:</p>
+                    <div class="code-block">
+<span class="comment"># Switch branches (replaces checkout for branches)</span>
+<span class="git-command">git switch branch-name</span>
+<span class="git-command">git switch -c new-branch</span>
+
+<span class="comment"># Restore files (replaces checkout for files)</span>
+<span class="git-command">git restore file.txt</span>
+<span class="git-command">git restore --source=HEAD~2 file.txt</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Checkout Scenarios</h4>
+                    <div class="code-block">
+<span class="comment"># Scenario 1: Accidentally modified file</span>
+<span class="git-command">git checkout -- config.js</span>
+<span class="output">Updated 1 path from the index</span>
+
+<span class="comment"># Scenario 2: Need code from old commit</span>
+<span class="git-command">git checkout abc123 -- old-feature.js</span>
+
+<span class="comment"># Scenario 3: Explore old version</span>
+<span class="git-command">git checkout HEAD~5</span>
+<span class="output">Note: switching to 'HEAD~5'.</span>
+<span class="output">You are in 'detached HEAD' state...</span>
+<span class="git-command">git checkout main</span> <span class="comment"># Return to main</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>6️⃣ GIT Fetch & Pull Revisited</h2>
+                
+                <h3>Git Fetch</h3>
+                <p>Downloads changes from remote but doesn't merge them.</p>
+                <div class="code-block">
+<span class="comment"># Fetch all branches</span>
+<span class="git-command">git fetch origin</span>
+
+<span class="comment"># Fetch specific branch</span>
+<span class="git-command">git fetch origin main</span>
+
+<span class="comment"># View fetched changes</span>
+<span class="git-command">git log origin/main</span>
+
+<span class="comment"># Merge fetched changes</span>
+<span class="git-command">git merge origin/main</span>
+                </div>
+
+                <h3>Git Pull (Fetch + Merge)</h3>
+                <div class="code-block">
+<span class="comment"># Pull = Fetch + Merge</span>
+<span class="git-command">git pull origin main</span>
+
+<span class="comment"># Pull with rebase instead of merge</span>
+<span class="git-command">git pull --rebase origin main</span>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>What It Does</th>
+                        <th>When to Use</th>
+                    </tr>
+                    <tr>
+                        <td>git fetch</td>
+                        <td>Download only</td>
+                        <td>Want to review before merging</td>
+                    </tr>
+                    <tr>
+                        <td>git pull</td>
+                        <td>Download + merge</td>
+                        <td>Quick sync with remote</td>
+                    </tr>
+                    <tr>
+                        <td>git pull --rebase</td>
+                        <td>Download + rebase</td>
+                        <td>Want linear history</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="activity-box" id="lab">
+                <h3>🎯 Hands-On Lab Activities</h3>
+                
+                <h4>Lab 1: Practice Merge</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Create a repository and make initial commit</li>
+                    <li>Create branch "feature-a", add file, commit</li>
+                    <li>Switch to main, create branch "feature-b", add different file, commit</li>
+                    <li>Merge feature-a into main</li>
+                    <li>Merge feature-b into main</li>
+                    <li>View git log to see merge commits</li>
+                </ol>
+
+                <h4>Lab 2: Resolve Merge Conflict</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Create index.html with "Main version" on main branch</li>
+                    <li>Create feature branch, modify same line to "Feature version"</li>
+                    <li>Try to merge - conflict will occur</li>
+                    <li>Resolve conflict manually</li>
+                    <li>Complete the merge</li>
+                </ol>
+
+                <h4>Lab 3: Use Git Stash</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Make changes to a file (don't commit)</li>
+                    <li>Stash the changes: <code>git stash</code></li>
+                    <li>Verify changes are gone: <code>git status</code></li>
+                    <li>Create new branch, do some work</li>
+                    <li>Return to original branch: <code>git stash pop</code></li>
+                </ol>
+
+                <h4>Lab 4: Practice Reset</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Make 3 commits</li>
+                    <li>Use <code>git reset --soft HEAD~1</code> to undo last commit</li>
+                    <li>Re-commit with better message</li>
+                    <li>Try <code>git reset --mixed HEAD~1</code></li>
+                    <li>Understand the difference</li>
+                </ol>
+
+                <h4>Lab 5: Checkout Practice</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Modify a file</li>
+                    <li>Discard changes: <code>git checkout -- filename</code></li>
+                    <li>Create and switch to new branch</li>
+                    <li>Checkout old commit (detached HEAD)</li>
+                    <li>Return to main branch</li>
+                </ol>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Merge vs Rebase Practice:</h4>
+                <ul>
+                    <li>Create two scenarios showing merge and rebase</li>
+                    <li>Document the difference in git log output</li>
+                    <li>Explain when you would use each</li>
+                </ul>
+
+                <h4>2. Stash Workflow:</h4>
+                <ul>
+                    <li>Create a real scenario using git stash</li>
+                    <li>Stash multiple changes with descriptive messages</li>
+                    <li>Practice stash list, apply, pop, drop</li>
+                </ul>
+
+                <h4>3. Understanding Questions:</h4>
+                <ul>
+                    <li>What's the difference between merge and rebase?</li>
+                    <li>When should you never use rebase?</li>
+                    <li>Explain the three types of git reset</li>
+                    <li>What's the difference between checkout and switch?</li>
+                    <li>How do you resolve a merge conflict?</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz</h3>
+                <ol>
+                    <li>What command creates a merge commit?</li>
+                    <li>What's the golden rule of rebase?</li>
+                    <li>How do you temporarily save uncommitted changes?</li>
+                    <li>What's the most dangerous git reset option?</li>
+                    <li>What command discards changes in a file?</li>
+                    <li>What's the difference between fetch and pull?</li>
+                    <li>How do you view all stashed changes?</li>
+                    <li>What happens in a detached HEAD state?</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li><code>git merge branch-name</code></li>
+                        <li>Never rebase commits that have been pushed to public repositories</li>
+                        <li><code>git stash</code></li>
+                        <li><code>git reset --hard</code> (permanently deletes changes)</li>
+                        <li><code>git checkout -- filename</code> or <code>git restore filename</code></li>
+                        <li>Fetch downloads changes; Pull downloads and merges</li>
+                        <li><code>git stash list</code></li>
+                        <li>You're not on any branch, viewing old commit</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                <div class="features-list">
+                    <ul>
+                        <li>✅ <strong>Merge</strong> combines branches, preserves history</li>
+                        <li>✅ <strong>Rebase</strong> creates linear history, never use on public branches</li>
+                        <li>✅ <strong>Stash</strong> temporarily saves work without committing</li>
+                        <li>✅ <strong>Reset</strong> undoes commits (--soft, --mixed, --hard)</li>
+                        <li>✅ <strong>Checkout</strong> switches branches and restores files</li>
+                        <li>✅ <strong>Fetch</strong> downloads without merging</li>
+                        <li>✅ Always resolve conflicts carefully</li>
+                        <li>✅ Be cautious with destructive commands</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer style="background: #2c3e50; color: white; text-align: center; padding: 2rem;">
+            <p>&copy; 2024 DevOps Course - Session 6 | B.Tech Computer Science and Engineering</p>
+            <p>Course Code: 22CSEDE16 | Module 2: Version Control - GIT</p>
+        </footer>
+    </div>
+</body>
+</html>
