@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: GIT Fundamentals | DevOps Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #f05033 0%, #e84118 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #f05033;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #f05033;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives {
+            background: linear-gradient(135deg, #f05033 0%, #e84118 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .objectives h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .code-block .comment {
+            color: #95a5a6;
+        }
+
+        .code-block .git-command {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .code-block .output {
+            color: #2ecc71;
+        }
+
+        .tree-architecture {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tree-box {
+            background: #e8f4f8;
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .tree-box h4 {
+            color: #3498db;
+            margin-top: 0;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: #e74c3c;
+            margin: 0.5rem 0;
+        }
+
+        .installation-steps {
+            background: #e8f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .installation-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .installation-steps li {
+            margin: 0.5rem 0;
+            line-height: 1.8;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .example-box h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .command-table th {
+            background: #f05033;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .command-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .command-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .command-table code {
+            background: #2c3e50;
+            color: #3498db;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .features-list {
+            background: #d4edda;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .features-list h4 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .practical-demo {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .practical-demo h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .workflow-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #f05033;
+        }
+
+        .step-number {
+            background: #f05033;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box h4 {
+            color: #dc3545;
+            margin-top: 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .tip-box h4 {
+            color: #17a2b8;
+            margin-top: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .homework {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .homework h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .quiz {
+            background: #cce5ff;
+            border-left: 4px solid #004085;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .quiz h3 {
+            color: #004085;
+            margin-top: 0;
+        }
+
+        .next-session {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .next-session a {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .next-session a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffd700 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 90%;
+            padding: 0.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔀 GIT Fundamentals</h1>
+            <p>Session 4 - Module 2 | Course Code: 22CSEDE16 | B.Tech CSE 2022</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Session 1: DevOps Basics</a></li>
+                <li><a href="session2.html">Session 2: SDLC</a></li>
+                <li><a href="session3.html">Session 3: Tools</a></li>
+                <li><a href="session4.html">Session 4: GIT Basics</a></li>
+                <li><a href="session5.html">Session 5: GIT & GitHub</a></li>
+                <li><a href="session6.html">Session 6: Advanced GIT</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="objectives">
+                <h2>📚 Learning Objectives</h2>
+                <p>By the end of this session, students will be able to:</p>
+                <ul>
+                    <li>Understand what version control is and why it's essential</li>
+                    <li>Explain GIT's 3-Tree Architecture</li>
+                    <li>Install and configure GIT on their system</li>
+                    <li>Understand GIT's key features and advantages</li>
+                    <li>Perform basic GIT operations (init, add, commit)</li>
+                    <li>Navigate the GIT workflow</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>What is Version Control?</h2>
+                
+                <p><strong>Version Control</strong> (also called Source Control) is a system that records changes to files over time so you can recall specific versions later. It's like having an "Undo" button for your entire project!</p>
+
+                <div class="example-box">
+                    <h4>📝 Real-World Analogy: Google Docs Version History</h4>
+                    <p>Remember when you're working on a Google Doc and you can see all the changes made by different people? You can go back to any previous version? That's version control!</p>
+                    <p><strong>GIT does this for code.</strong></p>
+                </div>
+
+                <h3>Why Do We Need Version Control?</h3>
+                <div class="features-list">
+                    <h4>Problems Without Version Control:</h4>
+                    <ul>
+                        <li>❌ <strong>"final_version_final_FINAL.docx"</strong> - Multiple file copies everywhere</li>
+                        <li>❌ Lost work when files get corrupted or accidentally deleted</li>
+                        <li>❌ No way to know who changed what and when</li>
+                        <li>❌ Difficult collaboration - emailing code files back and forth</li>
+                        <li>❌ Can't experiment without fear of breaking working code</li>
+                        <li>❌ No backup history</li>
+                    </ul>
+                </div>
+
+                <div class="features-list">
+                    <h4>Solutions With Version Control:</h4>
+                    <ul>
+                        <li>✅ <strong>Track every change</strong> - Know what changed, when, and by whom</li>
+                        <li>✅ <strong>Revert to any previous version</strong> - Time machine for code</li>
+                        <li>✅ <strong>Collaborate safely</strong> - Multiple people can work simultaneously</li>
+                        <li>✅ <strong>Branching</strong> - Experiment without breaking main code</li>
+                        <li>✅ <strong>Backup</strong> - Distributed copies ensure data safety</li>
+                        <li>✅ <strong>Accountability</strong> - Clear audit trail of changes</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Real Scenario: Bug in Production</h4>
+                    <p><strong>Without Version Control:</strong></p>
+                    <ul>
+                        <li>Website crashes after new update</li>
+                        <li>Don't know exactly what changed</li>
+                        <li>Spend hours trying to find the problem</li>
+                        <li>No way to quickly go back to working version</li>
+                    </ul>
+                    <p><strong>With Version Control (GIT):</strong></p>
+                    <ul>
+                        <li>Website crashes after new update</li>
+                        <li>Run: <code>git log</code> - See exact changes made</li>
+                        <li>Run: <code>git revert [commit-id]</code> - Undo problematic change</li>
+                        <li>Website back online in 2 minutes!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>What is GIT?</h2>
+                
+                <p><strong>GIT</strong> is a <span class="highlight">distributed version control system</span> created by Linus Torvalds (creator of Linux) in 2005. It's the most popular version control system in the world.</p>
+
+                <h3>GIT Key Features</h3>
+                <div class="features-list">
+                    <h4>Why GIT is Awesome:</h4>
+                    <ul>
+                        <li>✅ <strong>Distributed:</strong> Every developer has full history on their machine</li>
+                        <li>✅ <strong>Fast:</strong> Most operations are local, nearly instantaneous</li>
+                        <li>✅ <strong>Free & Open Source:</strong> No licensing costs</li>
+                        <li>✅ <strong>Branching & Merging:</strong> Create branches in seconds, merge easily</li>
+                        <li>✅ <strong>Data Integrity:</strong> Everything is checksummed (SHA-1 hash)</li>
+                        <li>✅ <strong>Staging Area:</strong> Control exactly what goes into each commit</li>
+                        <li>✅ <strong>Small & Fast:</strong> Lightweight, efficient storage</li>
+                        <li>✅ <strong>Industry Standard:</strong> Used by Google, Facebook, Microsoft, Netflix</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 GIT vs GitHub - What's the Difference?</h4>
+                    <ul>
+                        <li><strong>GIT</strong> = Version control software (runs on your computer)</li>
+                        <li><strong>GitHub</strong> = Cloud platform for hosting GIT repositories (like Google Drive for code)</li>
+                    </ul>
+                    <p><strong>Analogy:</strong> GIT is like email software (Outlook), GitHub is like Gmail (online email service)</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>GIT's 3-Tree Architecture</h2>
+                
+                <p>GIT uses a <strong>3-Tree Architecture</strong> to manage your code. Understanding this is crucial to mastering GIT!</p>
+
+                <div class="tree-architecture">
+                    <h3 style="text-align: center; color: #2c3e50;">The Three Trees</h3>
+                    
+                    <div class="tree-box">
+                        <h4>1️⃣ Working Directory</h4>
+                        <p><strong>What it is:</strong> Your actual project files on your computer</p>
+                        <p><strong>What you do:</strong> Edit, create, delete files here</p>
+                        <p><strong>Status:</strong> Untracked or Modified files</p>
+                    </div>
+
+                    <div class="arrow">↓ git add</div>
+
+                    <div class="tree-box" style="border-color: #f39c12;">
+                        <h4>2️⃣ Staging Area (Index)</h4>
+                        <p><strong>What it is:</strong> Preparation area for next commit</p>
+                        <p><strong>What you do:</strong> Choose which changes to include in next commit</p>
+                        <p><strong>Status:</strong> Staged files ready to commit</p>
+                    </div>
+
+                    <div class="arrow">↓ git commit</div>
+
+                    <div class="tree-box" style="border-color: #27ae60;">
+                        <h4>3️⃣ Repository (HEAD)</h4>
+                        <p><strong>What it is:</strong> Committed snapshots of your project</p>
+                        <p><strong>What you do:</strong> Permanent record of all commits</p>
+                        <p><strong>Status:</strong> Committed history</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎬 Movie Analogy: Making a Film</h4>
+                    <ul>
+                        <li><strong>Working Directory</strong> = Filming scenes (raw footage)</li>
+                        <li><strong>Staging Area</strong> = Editing room (selecting which scenes to include)</li>
+                        <li><strong>Repository</strong> = Final movie released to public (permanent record)</li>
+                    </ul>
+                    <p>You don't include every single shot in the final movie. You <strong>stage</strong> the best takes, then <strong>commit</strong> them to the final version!</p>
+                </div>
+
+                <div class="practical-demo">
+                    <h3>🔧 Practical Example: 3-Tree Workflow</h3>
+                    <div class="code-block">
+<span class="comment"># 1. Working Directory - Create a file</span>
+echo "Hello World" > hello.txt
+<span class="output"># File exists in Working Directory only</span>
+
+<span class="comment"># Check status</span>
+<span class="git-command">git status</span>
+<span class="output">Untracked files:
+  hello.txt</span>
+
+<span class="comment"># 2. Staging Area - Add file to staging</span>
+<span class="git-command">git add hello.txt</span>
+<span class="output"># File now in Staging Area</span>
+
+<span class="comment"># Check status again</span>
+<span class="git-command">git status</span>
+<span class="output">Changes to be committed:
+  new file: hello.txt</span>
+
+<span class="comment"># 3. Repository - Commit to repository</span>
+<span class="git-command">git commit -m "Add hello.txt"</span>
+<span class="output">[main a1b2c3d] Add hello.txt
+ 1 file changed, 1 insertion(+)</span>
+
+<span class="comment"># File now permanently in Repository!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>GIT Installation</h2>
+
+                <h3>Installation on Windows</h3>
+                <div class="installation-steps">
+                    <ol>
+                        <li><strong>Download GIT:</strong>
+                            <ul>
+                                <li>Visit <a href="https://git-scm.com/download/win" target="_blank">https://git-scm.com/download/win</a></li>
+                                <li>Download the installer (64-bit recommended)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Run Installer:</strong>
+                            <ul>
+                                <li>Run the downloaded .exe file</li>
+                                <li>Accept default settings (recommended for beginners)</li>
+                                <li>Important: Check "Git Bash Here" option</li>
+                            </ul>
+                        </li>
+                        <li><strong>Verify Installation:</strong>
+                            <div class="code-block">
+<span class="comment"># Open Command Prompt or Git Bash</span>
+git --version
+
+<span class="output"># Should show: git version 2.x.x</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <h3>Installation on Linux (Ubuntu)</h3>
+                <div class="code-block">
+<span class="comment"># Update package index</span>
+sudo apt update
+
+<span class="comment"># Install GIT</span>
+sudo apt install git -y
+
+<span class="comment"># Verify installation</span>
+git --version
+
+<span class="comment"># Should display git version</span>
+                </div>
+
+                <h3>Installation on macOS</h3>
+                <div class="code-block">
+<span class="comment"># Install using Homebrew (if you have it)</span>
+brew install git
+
+<span class="comment"># Or download from: https://git-scm.com/download/mac</span>
+
+<span class="comment"># Verify installation</span>
+git --version
+                </div>
+
+                <h3>Initial Configuration (Required!)</h3>
+                <p>After installing GIT, you <strong>must</strong> configure your identity. This information is included in every commit.</p>
+                <div class="code-block">
+<span class="comment"># Set your name</span>
+<span class="git-command">git config --global user.name "Your Name"</span>
+
+<span class="comment"># Set your email</span>
+<span class="git-command">git config --global user.email "your.email@example.com"</span>
+
+<span class="comment"># Set default editor (optional)</span>
+<span class="git-command">git config --global core.editor "code"</span>  <span class="comment"># For VS Code</span>
+
+<span class="comment"># Check your configuration</span>
+<span class="git-command">git config --list</span>
+
+<span class="output">user.name=Your Name
+user.email=your.email@example.com
+core.editor=code</span>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tip: Configuration Levels</h4>
+                    <ul>
+                        <li><code>--global</code> - Settings for all repositories for current user</li>
+                        <li><code>--system</code> - Settings for all users on the computer</li>
+                        <li><code>--local</code> - Settings for current repository only (default)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Basic GIT Workflow - Your First Repository</h2>
+
+                <div class="workflow-diagram">
+                    <h3>Creating and Working with a GIT Repository</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Create Project Directory</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+mkdir my-first-repo
+cd my-first-repo
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Initialize GIT Repository</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git init</span>
+
+<span class="output">Initialized empty Git repository in /path/to/my-first-repo/.git/</span>
+
+<span class="comment"># This creates a hidden .git folder that stores all version history</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Create Files</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="comment"># Create a simple text file</span>
+echo "# My First Repository" > README.md
+echo "console.log('Hello GIT!');" > app.js
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Check Status</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git status</span>
+
+<span class="output">On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        README.md
+        app.js
+
+nothing added to commit but untracked files present</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <strong>Stage Files (Add to Staging Area)</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="comment"># Add specific file</span>
+<span class="git-command">git add README.md</span>
+
+<span class="comment"># Or add all files</span>
+<span class="git-command">git add .</span>
+
+<span class="comment"># Check status</span>
+<span class="git-command">git status</span>
+
+<span class="output">On branch main
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   README.md
+        new file:   app.js</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <strong>Commit Changes (Save to Repository)</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git commit -m "Initial commit: Add README and app.js"</span>
+
+<span class="output">[main (root-commit) a1b2c3d] Initial commit: Add README and app.js
+ 2 files changed, 2 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 app.js</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">7</div>
+                        <div>
+                            <strong>View Commit History</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git log</span>
+
+<span class="output">commit a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+Author: Your Name &lt;your.email@example.com&gt;
+Date:   Mon Feb 10 10:30:00 2024 +0530
+
+    Initial commit: Add README and app.js</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Writing Good Commit Messages</h4>
+                    <p><strong>Bad:</strong> <code>git commit -m "update"</code></p>
+                    <p><strong>Good:</strong> <code>git commit -m "Fix login bug for mobile users"</code></p>
+                    <p><strong>Best Practice:</strong></p>
+                    <ul>
+                        <li>Start with a verb (Add, Fix, Update, Remove)</li>
+                        <li>Be specific and concise</li>
+                        <li>Explain WHAT and WHY, not HOW</li>
+                    </ul>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>✅ "Add user authentication feature"</li>
+                        <li>✅ "Fix navbar alignment on mobile devices"</li>
+                        <li>✅ "Update dependencies to latest versions"</li>
+                        <li>❌ "fixed stuff"</li>
+                        <li>❌ "changes"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Essential GIT Commands Reference</h2>
+
+                <table class="command-table">
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>git init</code></td>
+                        <td>Initialize a new GIT repository</td>
+                        <td><code>git init</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git status</code></td>
+                        <td>Show the working tree status</td>
+                        <td><code>git status</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git add</code></td>
+                        <td>Add files to staging area</td>
+                        <td><code>git add file.txt</code><br><code>git add .</code> (all files)</td>
+                    </tr>
+                    <tr>
+                        <td><code>git commit</code></td>
+                        <td>Record changes to the repository</td>
+                        <td><code>git commit -m "message"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git log</code></td>
+                        <td>Show commit history</td>
+                        <td><code>git log</code><br><code>git log --oneline</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git diff</code></td>
+                        <td>Show changes between commits, working tree, etc.</td>
+                        <td><code>git diff</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git config</code></td>
+                        <td>Get and set configuration options</td>
+                        <td><code>git config --global user.name "Name"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>git help</code></td>
+                        <td>Get help on any command</td>
+                        <td><code>git help commit</code></td>
+                    </tr>
+                </table>
+
+                <h3>GIT Status Output Explained</h3>
+                <div class="code-block">
+<span class="git-command">git status</span>
+
+<span class="output">On branch main                    </span><span class="comment"># Current branch</span>
+<span class="output">Your branch is up to date        </span><span class="comment"># Synced with remote</span>
+
+<span class="output">Changes not staged for commit:   </span><span class="comment"># Modified but not added</span>
+<span class="output">  (use "git add <file>...")
+        modified:   index.html</span>
+
+<span class="output">Untracked files:                 </span><span class="comment"># New files not in GIT</span>
+<span class="output">  (use "git add <file>...")
+        new-file.js</span>
+
+<span class="output">no changes added to commit       </span><span class="comment"># Nothing staged</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Practical Examples</h2>
+
+                <div class="practical-demo">
+                    <h3>🎯 Example 1: Building a Simple Website</h3>
+                    <div class="code-block">
+<span class="comment"># Step 1: Create project folder and initialize GIT</span>
+mkdir my-website
+cd my-website
+<span class="git-command">git init</span>
+
+<span class="comment"># Step 2: Create HTML file</span>
+cat > index.html &lt;&lt;EOF
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Website&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+
+<span class="comment"># Step 3: Check status</span>
+<span class="git-command">git status</span>
+<span class="output">Untracked files: index.html</span>
+
+<span class="comment"># Step 4: Add and commit</span>
+<span class="git-command">git add index.html</span>
+<span class="git-command">git commit -m "Add homepage HTML"</span>
+
+<span class="comment"># Step 5: Create CSS file</span>
+cat > style.css &lt;&lt;EOF
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+h1 {
+    color: #333;
+}
+EOF
+
+<span class="comment"># Step 6: Add and commit CSS</span>
+<span class="git-command">git add style.css</span>
+<span class="git-command">git commit -m "Add CSS styling"</span>
+
+<span class="comment"># Step 7: View history</span>
+<span class="git-command">git log --oneline</span>
+<span class="output">b2c3d4e Add CSS styling
+a1b2c3d Add homepage HTML</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔧 Example 2: Tracking Changes to a File</h4>
+                    <div class="code-block">
+<span class="comment"># Initial file</span>
+echo "Version 1 of the code" > app.js
+<span class="git-command">git add app.js</span>
+<span class="git-command">git commit -m "Add app.js version 1"</span>
+
+<span class="comment"># Make changes</span>
+echo "Version 2 of the code" > app.js
+
+<span class="comment"># See what changed</span>
+<span class="git-command">git diff</span>
+<span class="output">- Version 1 of the code
++ Version 2 of the code</span>
+
+<span class="comment"># Commit the change</span>
+<span class="git-command">git add app.js</span>
+<span class="git-command">git commit -m "Update app.js to version 2"</span>
+
+<span class="comment"># View history</span>
+<span class="git-command">git log --oneline</span>
+<span class="output">c3d4e5f Update app.js to version 2
+a1b2c3d Add app.js version 1</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎨 Example 3: Working on Multiple Files</h4>
+                    <div class="code-block">
+<span class="comment"># Create multiple files</span>
+echo "Header Component" > header.js
+echo "Footer Component" > footer.js
+echo "Main Content" > main.js
+
+<span class="comment"># Check status</span>
+<span class="git-command">git status</span>
+<span class="output">Untracked files:
+    header.js
+    footer.js
+    main.js</span>
+
+<span class="comment"># Add only specific files</span>
+<span class="git-command">git add header.js footer.js</span>
+
+<span class="comment"># Check status again</span>
+<span class="git-command">git status</span>
+<span class="output">Changes to be committed:
+    new file: header.js
+    new file: footer.js
+    
+Untracked files:
+    main.js</span>
+
+<span class="comment"># Commit staged files</span>
+<span class="git-command">git commit -m "Add header and footer components"</span>
+
+<span class="comment"># Add remaining file</span>
+<span class="git-command">git add main.js</span>
+<span class="git-command">git commit -m "Add main content component"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Common GIT Workflows</h2>
+
+                <h3>Daily Development Workflow</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Start your day - Check status</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git status</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Make changes to your code</strong>
+                            <p>Edit files in your favorite code editor</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Review changes</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git status</span>        <span class="comment"># See what changed</span>
+<span class="git-command">git diff</span>          <span class="comment"># See exact changes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Stage your changes</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git add .</span>         <span class="comment"># Stage all changes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <strong>Commit with meaningful message</strong>
+                            <div class="code-block" style="margin-top: 0.5rem;">
+<span class="git-command">git commit -m "Add user login feature"</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <strong>Repeat 2-5 throughout the day</strong>
+                            <p>Commit frequently! Every logical change should be a commit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 How Often Should You Commit?</h4>
+                    <ul>
+                        <li>✅ <strong>Good Practice:</strong> Commit after completing each feature or fix</li>
+                        <li>✅ Commit before taking a break or end of day</li>
+                        <li>✅ Commit when code is in a working state</li>
+                        <li>❌ Don't commit broken code</li>
+                        <li>❌ Don't wait too long between commits</li>
+                    </ul>
+                    <p><strong>Rule of Thumb:</strong> If you can describe the change in one sentence, it's ready to commit!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Understanding the .git Directory</h2>
+
+                <p>When you run <code>git init</code>, GIT creates a hidden <code>.git</code> directory. This is where ALL your version history is stored!</p>
+
+                <div class="code-block">
+<span class="comment"># View .git directory (Linux/Mac)</span>
+ls -la .git
+
+<span class="comment"># View .git directory (Windows)</span>
+dir /a .git
+
+<span class="output">.git/
+├── HEAD           # Points to current branch
+├── config         # Repository configuration
+├── description    # Repository description
+├── hooks/         # Scripts for automation
+├── info/          # Global exclude file
+├── objects/       # All commits, trees, blobs
+├── refs/          # References to commits (branches, tags)
+└── index          # Staging area information</span>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Warning: Never Delete .git Folder!</h4>
+                    <p>Deleting the <code>.git</code> folder means:</p>
+                    <ul>
+                        <li>❌ You lose ALL version history</li>
+                        <li>❌ You can't undo changes</li>
+                        <li>❌ You lose all branches</li>
+                        <li>❌ The folder becomes a regular folder (not a GIT repo)</li>
+                    </ul>
+                    <p><strong>It's like burning all your backup drives!</strong></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>GIT Best Practices for Beginners</h2>
+
+                <div class="features-list">
+                    <h4>✅ DO:</h4>
+                    <ul>
+                        <li>Commit early and often</li>
+                        <li>Write clear, descriptive commit messages</li>
+                        <li>Review changes before committing (<code>git diff</code>)</li>
+                        <li>Use <code>git status</code> frequently</li>
+                        <li>Keep commits focused on one logical change</li>
+                        <li>Commit working code (don't commit broken code)</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>❌ DON'T:</h4>
+                    <ul>
+                        <li>Commit large binary files (images, videos, compiled code)</li>
+                        <li>Commit sensitive information (passwords, API keys)</li>
+                        <li>Use vague commit messages ("update", "fix", "changes")</li>
+                        <li>Commit without testing your code first</li>
+                        <li>Delete the .git folder</li>
+                        <li>Commit generated files (node_modules, build folders)</li>
+                    </ul>
+                </div>
+
+                <h3>Using .gitignore File</h3>
+                <p>Create a <code>.gitignore</code> file to tell GIT which files to ignore:</p>
+                <div class="code-block">
+<span class="comment"># .gitignore file example</span>
+
+<span class="comment"># Ignore node_modules folder</span>
+node_modules/
+
+<span class="comment"># Ignore log files</span>
+*.log
+
+<span class="comment"># Ignore environment variables</span>
+.env
+
+<span class="comment"># Ignore build output</span>
+dist/
+build/
+
+<span class="comment"># Ignore OS files</span>
+.DS_Store
+Thumbs.db
+
+<span class="comment"># Ignore IDE files</span>
+.vscode/
+.idea/
+                </div>
+
+                <div class="example-box">
+                    <h4>Creating .gitignore</h4>
+                    <div class="code-block">
+<span class="comment"># Create .gitignore file</span>
+echo "node_modules/" > .gitignore
+echo "*.log" >> .gitignore
+
+<span class="comment"># Add and commit .gitignore</span>
+<span class="git-command">git add .gitignore</span>
+<span class="git-command">git commit -m "Add .gitignore file"</span>
+
+<span class="comment"># Now node_modules and .log files won't be tracked!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3>🎯 Hands-On Lab Activity</h3>
+                
+                <h4>Lab Exercise: Create Your First GIT Project</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li><strong>Setup:</strong>
+                        <ul>
+                            <li>Create a folder called "my-portfolio"</li>
+                            <li>Initialize it as a GIT repository</li>
+                        </ul>
+                    </li>
+                    <li><strong>Create Files:</strong>
+                        <ul>
+                            <li>Create index.html with basic HTML structure</li>
+                            <li>Create style.css with some basic styling</li>
+                            <li>Create about.html with your bio</li>
+                        </ul>
+                    </li>
+                    <li><strong>First Commit:</strong>
+                        <ul>
+                            <li>Add index.html and commit with message "Add homepage"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Second Commit:</strong>
+                        <ul>
+                            <li>Add style.css and commit with message "Add CSS styling"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Third Commit:</strong>
+                        <ul>
+                            <li>Add about.html and commit with message "Add about page"</li>
+                        </ul>
+                    </li>
+                    <li><strong>View History:</strong>
+                        <ul>
+                            <li>Run <code>git log</code> and take a screenshot</li>
+                            <li>You should see 3 commits!</li>
+                        </ul>
+                    </li>
+                    <li><strong>Make Changes:</strong>
+                        <ul>
+                            <li>Edit index.html (add a paragraph)</li>
+                            <li>Use <code>git diff</code> to see changes</li>
+                            <li>Commit the changes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Create .gitignore:</strong>
+                        <ul>
+                            <li>Create .gitignore file</li>
+                            <li>Add some common patterns</li>
+                            <li>Commit .gitignore</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Challenge: Understanding Git Status</h4>
+                <ol style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 5px; margin: 1rem 0;">
+                    <li>Create a new file "contact.html" (don't add it)</li>
+                    <li>Modify index.html (don't add it)</li>
+                    <li>Run <code>git status</code></li>
+                    <li>What do you see? Explain the output</li>
+                    <li>Now add only contact.html</li>
+                    <li>Run <code>git status</code> again - What changed?</li>
+                </ol>
+            </div>
+
+            <div class="homework">
+                <h3>📝 Homework Assignment</h3>
+                
+                <h4>1. Personal Project Setup:</h4>
+                <ul>
+                    <li>Create a GIT repository for a personal project (calculator app, to-do list, etc.)</li>
+                    <li>Make at least 5 meaningful commits</li>
+                    <li>Take screenshots of:
+                        <ul>
+                            <li><code>git status</code> output</li>
+                            <li><code>git log</code> output</li>
+                            <li><code>git diff</code> output showing changes</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2. Understanding Questions:</h4>
+                <p>Answer these questions in your own words:</p>
+                <ul>
+                    <li>What is the difference between the Working Directory, Staging Area, and Repository?</li>
+                    <li>Why do we need the Staging Area? Why not commit directly?</li>
+                    <li>What happens when you run <code>git init</code>?</li>
+                    <li>How is GIT different from GitHub?</li>
+                </ul>
+
+                <h4>3. Command Practice:</h4>
+                <p>Practice these scenarios and document the commands:</p>
+                <ul>
+                    <li>Create a file, add it to staging, then remove it from staging (without deleting)</li>
+                    <li>Create 3 files, add only 2 to staging, commit them</li>
+                    <li>View commit history in one-line format</li>
+                </ul>
+
+                <h4>4. .gitignore Practice:</h4>
+                <ul>
+                    <li>Create a .gitignore file for a Node.js project</li>
+                    <li>List at least 5 patterns that should be ignored</li>
+                    <li>Explain why each should be ignored</li>
+                </ul>
+
+                <h4>5. Prepare for Next Session:</h4>
+                <ul>
+                    <li>Create a GitHub account (if you don't have one)</li>
+                    <li>Read about Git Clone, Push, and Pull</li>
+                    <li>Watch: "Git and GitHub for Beginners" on YouTube</li>
+                </ul>
+            </div>
+
+            <div class="quiz">
+                <h3>🎓 Quick Quiz (Knowledge Check)</h3>
+                <ol>
+                    <li>What command initializes a new GIT repository?</li>
+                    <li>What are the three trees in GIT's architecture?</li>
+                    <li>What does <code>git add</code> do?</li>
+                    <li>What is the purpose of <code>git status</code>?</li>
+                    <li>What makes a good commit message?</li>
+                    <li>What file would you create to ignore certain files from GIT?</li>
+                    <li>What command shows the commit history?</li>
+                    <li>What does <code>git diff</code> show?</li>
+                    <li>Where is all the GIT repository data stored?</li>
+                    <li>What is the difference between <code>git add .</code> and <code>git add filename</code>?</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Show Answers</summary>
+                    <ol style="margin-top: 1rem;">
+                        <li><code>git init</code></li>
+                        <li>Working Directory, Staging Area (Index), Repository (HEAD)</li>
+                        <li>Adds files to the staging area (prepares them for commit)</li>
+                        <li>Shows the current state of the working directory and staging area</li>
+                        <li>Clear, descriptive, starts with a verb, explains what and why</li>
+                        <li>.gitignore</li>
+                        <li><code>git log</code></li>
+                        <li>Shows the differences between files (what changed)</li>
+                        <li>In the hidden .git directory</li>
+                        <li><code>git add .</code> adds all files; <code>git add filename</code> adds only the specific file</li>
+                    </ol>
+                </details>
+            </div>
+
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                
+                <div class="features-list">
+                    <h4>Essential Concepts:</h4>
+                    <ul>
+                        <li>✅ <strong>Version Control</strong> tracks changes to files over time</li>
+                        <li>✅ <strong>GIT</strong> is a distributed version control system</li>
+                        <li>✅ <strong>3-Tree Architecture:</strong> Working Directory → Staging Area → Repository</li>
+                        <li>✅ <strong>git init</strong> creates a new repository</li>
+                        <li>✅ <strong>git add</strong> stages changes</li>
+                        <li>✅ <strong>git commit</strong> saves changes permanently</li>
+                        <li>✅ <strong>git status</strong> shows current state</li>
+                        <li>✅ <strong>.gitignore</strong> excludes files from tracking</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Remember the Flow:</h4>
+                    <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+                        <strong>Edit Files → git add → git commit → Repeat</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="next-session">
+                <h3>🚀 Next Session Preview</h3>
+                <h2>Session 5: GIT Operations & GitHub</h2>
+                <p>In the next session, we'll explore:</p>
+                <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+                    <li>GIT Clone, Commit, Push operations</li>
+                    <li>Creating and managing GitHub repositories</li>
+                    <li>Connecting local repository to GitHub</li>
+                    <li>Pushing code to remote repositories</li>
+                    <li>GitHub project management and collaboration</li>
+                    <li>Working with README.md and documentation</li>
+                </ul>
+                <a href="session5.html">Go to Session 5 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 DevOps Course | B.Tech CSE 2022 | Course Code: 22CSEDE16</p>
+            <p>Faculty of Engineering and Technology</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Module 2 - Session 4: GIT Fundamentals</p>
+        </footer>
+    </div>
+</body>
+</html>
